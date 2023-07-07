@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@apidevtools/openapi-schemas": "^2.1.0",
+    "@apidevtools/swagger-methods": "^3.0.2",
+    "@foal/swagger": "^3.2.0",
+    "swagger-jsdoc": "^6.0.0",
+    "swagger-ui-express": "^4.6.3"
+  }
+}
