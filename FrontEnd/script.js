@@ -412,7 +412,7 @@ deleteGalleryButton.addEventListener('click', () => {
 */
 
 
-//* Deuxième modale pour l'ajout de photo
+/* Deuxième modale pour l'ajout de photo
 
 // Sélectionnez les éléments nécessaires
 const addImageButton = document.getElementById('addImageButton');
@@ -471,7 +471,8 @@ addImageForm.addEventListener('submit', async (event) => {
 });
 
 
-/*
+
+//*
 document.addEventListener('DOMContentLoaded', function () {
   const btnModifier = document.getElementById('btnModifier');
   const modal = document.getElementById('modal');
@@ -572,7 +573,8 @@ modifierButton.addEventListener('click', () => {
   recupererTravauxArchitecte(); // Récupérer les travaux et générer le contenu de la modale
 });
 
-// Deuxième modale pour l'ajout de photo
+*/ 
+//* Deuxième modale pour l'ajout de photo
 const addImageButton = document.getElementById('addImageButton');
 const addPhotoModal = document.getElementById('addPhotoModal');
 const closeAddPhotoModalButton = document.getElementById('closeAddPhotoModalButton');
@@ -630,7 +632,7 @@ addImageForm.addEventListener('submit', async (event) => {
   }
 });
 
-*/
+
 
 /*document.addEventListener('DOMContentLoaded', function () {
   const btnModifier = document.getElementById('btnModifier');
