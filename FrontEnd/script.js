@@ -65,7 +65,9 @@ recupererTravauxArchitecte();
 
 
 
-/* Modale
+
+
+//* Modale
 
 document.addEventListener('DOMContentLoaded', function() {
   const btnModifier = document.getElementById('btnModifier');
@@ -171,10 +173,6 @@ loginLink.addEventListener('click', handleLoginLogout);
 
 
 
-
-
-
-
 // Fonction pour générer le contenu de la modale avec la galerie des travaux
 function generateModalContent(travaux) {
   const modal = document.getElementById('modal');
@@ -222,8 +220,8 @@ modifierButton.addEventListener('click', () => {
 
 
 
-// Sélectionnez les éléments nécessaires
-// Sélectionnez les éléments nécessaires pour la modale de galerie
+
+/* Sélectionnez les éléments nécessaires pour la modale de galerie
 const modal = document.getElementById('modal');
 const editButton = document.getElementById('editButton');
 const gallery = document.getElementById('gallery');
@@ -279,14 +277,14 @@ deleteGalleryButton.addEventListener('click', () => {
     gallery.innerHTML = '';
   }
 });
+*/
 
 
 
-
-/* deuxieme modale
-
+//* deuxieme modale
 
 
+/*
 // Sélectionnez les éléments nécessaires pour la modale d'ajout de photo
 const addImageButton = document.getElementById('addImageButton');
 const addPhotoModal = document.getElementById('addPhotoModal');
@@ -315,7 +313,7 @@ function openAddPhotoModal() {
 function closeAddPhotoModal() {
   addPhotoModal.style.display = 'none';
 }
-/*
+
 // Écouter l'événement de clic sur le bouton "Modifier" pour ouvrir la modale de galerie
 editButton.addEventListener('click', openModal);
 
@@ -414,7 +412,7 @@ deleteGalleryButton.addEventListener('click', () => {
 */
 
 
-/* Deuxième modale pour l'ajout de photo
+//* Deuxième modale pour l'ajout de photo
 
 // Sélectionnez les éléments nécessaires
 const addImageButton = document.getElementById('addImageButton');
@@ -471,7 +469,7 @@ addImageForm.addEventListener('submit', async (event) => {
     console.error('Erreur lors de l\'ajout de l\'image:', error);
   }
 });
-jusqu'ici pas k */
+
 
 /*
 document.addEventListener('DOMContentLoaded', function () {
@@ -634,7 +632,7 @@ addImageForm.addEventListener('submit', async (event) => {
 
 */
 
-document.addEventListener('DOMContentLoaded', function () {
+/*document.addEventListener('DOMContentLoaded', function () {
   const btnModifier = document.getElementById('btnModifier');
   const modal = document.getElementById('modal');
   const closeBtn = document.querySelector('.close');
@@ -734,10 +732,8 @@ modifierButton.addEventListener('click', () => {
   recupererTravauxArchitecte(); // Récupérer les travaux et générer le contenu de la modale
 });
 
-
-
 // Deuxième modale pour l'ajout de photo
-
+const addImageButton = document.getElementById('addImageButton');
 const addPhotoModal = document.getElementById('addPhotoModal');
 const closeAddPhotoModalButton = document.getElementById('closeAddPhotoModalButton');
 const addImageForm = document.getElementById('addImageForm');
@@ -791,4 +787,4 @@ addImageForm.addEventListener('submit', async (event) => {
   } catch (error) {
     console.error('Erreur lors de l\'ajout de l\'image:', error);
   }
-});
+});*/

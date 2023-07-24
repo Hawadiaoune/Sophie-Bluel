@@ -19,7 +19,7 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li><a href="./login.html" id="loginLink">Login</a></li>  
+			<li><a href="login.html"> login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -37,71 +37,13 @@
 			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 		</article>
-
-
-<button id="btnModifier" style="display: none;">Modifier</button>
-
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-
-
-
-  
-	<h3>Ma galerie de travaux</h3>
-	<div id="gallery">
-
-	</div>
-  
-
-  </div>
-  
-
-	<button type="submit">Ajouter une photo</button>
-
-  <button id="deleteGalleryButton">Supprimer la galerie</button>
-  </div>
-</div>
-
-<!-- Modale pour l'ajout de photo -->
-<div id="addPhotoModal" class="modal">
-	<div class="modal-content">
-	  <span class="close" >&times;</span>
-	  <h3>Ajout photo</h3>
-	  <!-- Contenu de la modale d'ajout de photo -->
-	  <section>
-		<h4>+Ajouter Photo, jpg, png, 4 Mo max</h4>
-		<form id="addImageForm">
-			<input type="file" name="image" id="imageInput" accept="image/*">
-		</form>
-
-	  </section>
-	  <section>
-		<h4>Titre</h4>
-		<input type="text" name="title" id="imageTitle" />
-	  </section>
-	  <section>
-		<h4>Catégorie</h4>
-		<input type="text" name="category" id="imageCategory" />
-	  </section>
-	  <button id="saveImageButton">Valider</button>
-	</div>
-  </div>
-
-  
-  
-  
-  
-
-					
-
 	</section>
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
-		<button class="bouton category-button" data-categoryId="tous">Tous</button>
-		<button class="bouton1 category-button" data-categoryId="1">Objets</button>
-		<button class="bouton1 category-button" data-categoryId="2">Appartements</button>
-		<button class="bouton1 category-button" data-categoryId="3">Hotels & restaurants</button>
+		<button class="bouton" data-categoryId="tous">Tous</button>
+		<button class="bouton1" data-categoryId="1">Objets</button>
+		<button class="bouton1" data-categoryId="2">Appartements</button>
+		<button class="bouton1" data-categoryId="3">Hotels & restaurants</button>
 		
 		<div class="gallery"  id="galerie-architecte">
 			<figure>
@@ -168,7 +110,6 @@
 	</section>
 
 
-
 </main>
 
 <footer>
@@ -178,6 +119,5 @@
 		</ul>
 	</nav>
 </footer>
-
 </body>
 </html>

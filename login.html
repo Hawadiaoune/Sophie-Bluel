@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Sophie Bluel - Architecte d'intérieur</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<meta name="description" content="">
+	<link rel="stylesheet" href="./assets/style.css"> 
+</head>
+<body>
+    <header>
+        <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+        <nav>
+            <ul>
+                <li>projets</li>
+                <li>contact</li>
+                <li>login</li>
+                <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+            </ul>
+        </nav>
+    </header>
+<main>
+
+    <section id="login">
+        <h2>Log In</h2>
+        <form id="loginForm" method="post">
+            <label for="username">Email</label>
+            <input type="text" id="username" required>
+
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" required>
+
+            <button type="submit">Se connecter</button>
+        </form>
+        <p id="loginMessage"></p>
+    </section>
+    
+</main>
+<footer>
+	<nav>
+		<ul>
+			<li>Mentions Légales</li>
+		</ul>
+	</nav>
+</footer>
+</body>
+
+<script> 
+// Fonction pour gérer la soumission du formulaire
+function handleLoginFormSubmit(event) {
+	event.preventDefault();
+
+	// Récupérer les valeurs des champs du formulaire
+	const username = document.getElementById('username').value;
+	const password = document.getElementById('password').value;
+
+	// Vérifier les identifiants et mots de passe
+	if (username === 'sophie.bluel@test.tld' && password === 'S0phie') {
+		// Identifiants et mots de passe corrects
+		const successMessage = "Connexion réussie ! Bienvenue, " + username + " !";
+		showSuccessMessage(successMessage);
+		redirectToHomePage();
+	} else {
+		// Identifiants et mots de passe incorrects
+		const errorMessage = "Erreur dans l'identifiant ou le mot de passe";
+		showErrorMessage(errorMessage);
+	}
+}
+
+// Fonction pour afficher un message de succès
+function showSuccessMessage(message) {
+	const loginMessage = document.getElementById('loginMessage');
+	loginMessage.textContent = message;
+	loginMessage.style.color = 'green';
+}
+
+// Fonction pour afficher un message d'erreur
+function showErrorMessage(message) {
+	const loginMessage = document.getElementById('loginMessage');
+	loginMessage.textContent = message;
+	loginMessage.style.color = 'red';
+}
+
+// Fonction pour rediriger vers la page d'accueil
+function redirectToHomePage() {
+	window.location.href = './index.html';
+}
+
+// Écouter l'événement de soumission du formulaire
+const loginForm = document.getElementById('loginForm');
+loginForm.addEventListener('submit', handleLoginFormSubmit);
+
+
+
+
+
+
+</script>
+</html>
