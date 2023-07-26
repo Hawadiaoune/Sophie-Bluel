@@ -45,36 +45,30 @@
   <div class="modal-content">
     <span class="close">&times;</span>
 
-
-
-  
-	<h3>Ma galerie de travaux</h3>
+	<h3>Galerie photo</h3>
 	<div id="gallery">
-
 	</div>
   
-
   </div>
   
 
-	<button type="submit">Ajouter une photo</button>
+  <button id="openAddPhotoModalButton">Ajouter une photo</button>
 
   <button id="deleteGalleryButton">Supprimer la galerie</button>
   </div>
-</div>
 
-<!-- Modale pour l'ajout de photo -->
-<div id="addPhotoModal" class="modal">
+
+
+<div id="addPhotoModal" class=" add-photo-modal">
 	<div class="modal-content">
 	  <span class="close" >&times;</span>
 	  <h3>Ajout photo</h3>
-	  <!-- Contenu de la modale d'ajout de photo -->
+
 	  <section>
 		<h4>+Ajouter Photo, jpg, png, 4 Mo max</h4>
 		<form id="addImageForm">
-			<input type="file" name="image" id="imageInput" accept="image/*">
+		  <input type="file" name="image" id="imageInput" accept="image/*">
 		</form>
-
 	  </section>
 	  <section>
 		<h4>Titre</h4>
@@ -87,6 +81,7 @@
 	  <button id="saveImageButton">Valider</button>
 	</div>
   </div>
+  
 
   
   

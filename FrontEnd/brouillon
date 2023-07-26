@@ -300,3 +300,30 @@ function handleLoginFormSubmit(event) {
   // Écouter l'événement de soumission du formulaire
   const loginForm = document.getElementById('loginForm');
   loginForm.addEventListener('submit', handleLoginFormSubmit);
+
+
+
+  <!-- Modale pour l'ajout de photo -->
+<div id="addPhotoModal" class="modal">
+	<div class="modal-content">
+	  <span class="close" >&times;</span>
+	  <h3>Ajout photo</h3>
+	  <!-- Contenu de la modale d'ajout de photo -->
+	  <section>
+		<h4>+Ajouter Photo, jpg, png, 4 Mo max</h4>
+		<form id="addImageForm">
+			<input type="file" name="image" id="imageInput" accept="image/*">
+		</form>
+
+	  </section>
+	  <section>
+		<h4>Titre</h4>
+		<input type="text" name="title" id="imageTitle" />
+	  </section>
+	  <section>
+		<h4>Catégorie</h4>
+		<input type="text" name="category" id="imageCategory" />
+	  </section>
+	  <button id="saveImageButton">Valider</button>
+	</div>
+  </div>

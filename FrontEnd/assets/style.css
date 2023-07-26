@@ -258,3 +258,6 @@ footer nav ul {
 	cursor: pointer;
   }
   
+  .delete-icon{
+	color: #000;
+  }
