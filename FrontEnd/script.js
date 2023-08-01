@@ -67,7 +67,73 @@ recupererTravauxArchitecte();
 
 
 
-//* Modale
+//* Modale connexion/deconnexion
+
+
+
+// Sélectionne l'élément du lien de connexion/logout
+const loginLink = document.getElementById('loginLink');
+
+// Vérifie si un token d'authentification est présent dans le stockage local
+const token = localStorage.getItem('token');
+if (token) {
+  // Si un token est présent, cela signifie que l'utilisateur est connecté
+  // Masque le lien de connexion et affichez le lien de déconnexion
+  loginLink.textContent = 'Logout';
+}
+
+
+
+// Ajoutez un écouteur d'événement au lien de connexion/logout
+loginLink.addEventListener('click', handleLoginLogout);
+
+
+
+
+function handleLoginLogout() {
+  if (token) {
+    // Si un token est présent, cela signifie que l'utilisateur est connecté
+    // Effectue ici les étapes de déconnexion
+
+    // Supprime le token du stockage local
+    localStorage.removeItem('token');
+
+    // Redirige vers la page de login
+    window.location.href = './index.html';
+  } else {
+    // Si aucun token n'est présent, cela signifie que l'utilisateur n'est pas connecté
+    // Redirige vers la page de login
+    window.location.href = './login.html';
+  }
+}
+
+
+
+// Fonction pour mettre à jour l'affichage du bouton de connexion/logout dans la barre de navigation
+function updateLoginButton() {
+  const loginLink = document.getElementById('loginLink');
+
+  // Vérifier si un token est présent
+  const token = localStorage.getItem('token');
+  if (token) {
+    // Si un token est présent, cela signifie que l'utilisateur est connecté
+    // Afficher "Logout" sur le bouton de connexion/logout
+    loginLink.textContent = 'Logout';
+  } else {
+    // Si aucun token n'est présent, cela signifie que l'utilisateur n'est pas connecté
+    // Afficher "Login" sur le bouton de connexion/logout
+    loginLink.textContent = 'Login';
+  }
+}
+
+// Appeler la fonction pour mettre à jour l'affichage du bouton de connexion/logout au chargement de la page
+window.addEventListener('load', updateLoginButton);
+
+
+// Écouter l'événement de clic sur le bouton de connexion/logout
+loginLink.addEventListener('click', handleLoginLogout);
+
+//* Modale 1
 
 document.addEventListener('DOMContentLoaded', function() {
   const btnModifier = document.getElementById('btnModifier');
@@ -95,9 +161,10 @@ document.addEventListener('DOMContentLoaded', function() {
   } else {
     // Si aucun token n'est présent, cela signifie que l'utilisateur n'est pas connecté
     // Redirige vers la page de login
-    window.location.href = 'login.html';
+    window.location.href = './login.html';
+    modal.style.display = 'none';
   }
-    modal.style.display = 'block';
+ 
   }
 
   closeBtn.addEventListener('click', fermerModal);
@@ -107,77 +174,35 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Sélectionne l'élément du lien de connexion/logout
-const loginLink = document.getElementById('loginLink');
-
-// Vérifie si un token d'authentification est présent dans le stockage local
-const token = localStorage.getItem('token');
-if (token) {
-  // Si un token est présent, cela signifie que l'utilisateur est connecté
-  // Masque le lien de connexion et affichez le lien de déconnexion
-  loginLink.textContent = 'Logout';
-} else {
-  // Si aucun token n'est présent, cela signifie que l'utilisateur n'est pas connecté
-  // Masque le lien de déconnexion
-  loginLink.style.display = 'none';
-}
-
-
-// Ajoutez un écouteur d'événement au lien de connexion/logout
-loginLink.addEventListener('click', handleLoginLogout);
-
-
-
-
-function handleLoginLogout() {
-  if (token) {
-    // Si un token est présent, cela signifie que l'utilisateur est connecté
-    // Effectue ici les étapes de déconnexion
-
-    // Supprime le token du stockage local
-    localStorage.removeItem('token');
-
-    // Redirige vers la page de login
-    window.location.href = './index.html';
-  } else {
-    // Si aucun token n'est présent, cela signifie que l'utilisateur n'est pas connecté
-    // Redirige vers la page de login
-    window.location.href = 'login.html';
-  }
-}
-
-
-// Fonction pour mettre à jour l'affichage du bouton de connexion/logout dans la barre de navigation
-function updateLoginButton() {
-  const loginNavItem = document.getElementById('loginNavItem');
-  const logoutNavItem = document.getElementById('logoutNavItem');
-
-  if (token) {
-    // Si un token est présent, cela signifie que l'utilisateur est connecté
-    // Afficher le bouton de déconnexion et masquer le bouton de connexion
-    loginNavItem.style.display = 'none';
-    logoutNavItem.style.display = 'block';
-  } else {
-    // Si aucun token n'est présent, cela signifie que l'utilisateur n'est pas connecté
-    // Afficher le bouton de connexion et masquer le bouton de déconnexion
-    loginNavItem.style.display = 'block';
-    logoutNavItem.style.display = 'none';
-  }
-}
-
-// Appeler la fonction updateLoginButton() au chargement de la page pour mettre à jour l'affichage initial
-window.addEventListener('load', updateLoginButton);
-
-// Écouter l'événement de clic sur le bouton de connexion/logout
-loginLink.addEventListener('click', handleLoginLogout);
-
-
-
 // Fonction pour générer le contenu de la modale avec la galerie des travaux
 function generateModalContent(travaux) {
   const modal = document.getElementById('modal');
 
-
+  
+  async function deleteImage(imageId) {
+    try {
+      const response = await fetch(`http://localhost:5678/api/works/${imageId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + token, 
+        },
+      });
+  
+      if (response.ok) {
+        // La suppression a réussi
+        // Supprimer l'élément de la photo du DOM correspondant
+        const photoElement = document.querySelector(`img[data-id="${imageId}"]`);
+        if (photoElement) {
+          photoElement.remove();
+        }
+      } else {
+        console.error('La suppression de l\'image a échoué :', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Erreur lors de la suppression de l\'image :', error);
+    }
+  }
+  
 
   // Générer le contenu pour chaque travail
   travaux.forEach(travail => {
@@ -188,27 +213,25 @@ function generateModalContent(travaux) {
     imageElement.src = travail.imageUrl;
     travailElement.appendChild(imageElement);
 
-  // Ajouter l'icône poubelle pour supprimer la photo
+
+
+    // Ajouter l'icône poubelle pour supprimer la photo
     const deleteIcon = document.createElement('i');
     deleteIcon.classList.add('fas', 'fa-trash-alt', 'delete-icon');
     deleteIcon.addEventListener('click', () => deleteImage(travail.id)); // Appel de la fonction deleteImage avec l'ID du travail
     travailElement.appendChild(deleteIcon);
+    console.log(deleteIcon)
 
-    /**    // Ajouter l'icône poubelle pour supprimer la photo
-    const deleteIcon = document.createElement('i');
-    deleteIcon.classList.add('fas', 'fa-trash-alt', 'delete-icon');
-    deleteIcon.setAttribute('data-id', travail.id); // Ajouter l'ID du travail comme attribut personnalisé
-    deleteIcon.addEventListener('click', handleDeleteImage); // Ajouter un gestionnaire d'événements au clic sur l'icône poubelle
-    travailElement.appendChild(deleteIcon);
- */
-
-    
+  // Ajouter le bouton editer
     const editButton = document.createElement('button');
     editButton.classList.add('edit-button');
     editButton.textContent = 'Éditer';
     travailElement.appendChild(editButton);
 
+
+    // Ajouter la div du travail à la modale
     modal.appendChild(travailElement);
+
   });
 }
 
@@ -224,42 +247,129 @@ async function recupererTravauxArchitecte() {
 }
 
 // Écouter l'événement de clic sur le bouton "Modifier" pour ouvrir la modale
-const modifierButton = document.getElementById('modifierButton');
+const modifierButton = document.getElementById('btnModifier');
 modifierButton.addEventListener('click', () => {
   const modal = document.getElementById('modal');
   modal.style.display = 'block'; // Afficher la modale lorsque le bouton "Modifier" est cliqué
-  recupererTravauxArchitecte(); // Récupérer les travaux et générer le contenu de la modale
+
 });
+
+
 
 // 
 
 
-
+//* recuperer d facon dynamique les categories
 
 //* Deuxieme modale ajout photo
 
 
-const addPhotoModal = document.getElementById('addPhotoModal');
-const closeButton = document.getElementById('closeAddPhotoModalButton');
-const openAddPhotoModalButton = document.getElementById('openAddPhotoModalButton');
+
+document.addEventListener('DOMContentLoaded', function () {
+  const modal = document.getElementById('modal');
+  const modalContent = document.getElementById('modal-content');
+  const addPhotoModal = document.getElementById('addPhotoModal');
+  const closeButton = document.getElementById('closeAddPhotoModalButton');
+  const openAddPhotoModalButton = document.getElementById('openAddPhotoModalButton');
+  const saveImageButton = document.getElementById('saveImageButton');
+
+  // Ajoutez un écouteur d'événement pour le clic sur le bouton "Ajouter une photo"
+  openAddPhotoModalButton.addEventListener('click', openAddPhotoModal);
+
+  // Fonction pour afficher la modale d'ajout de photo
+  function openAddPhotoModal() {
+
+    // Masquer la galerie photo
+    modalContent.classList.add('hide');
+
+    // Afficher la modale d'ajout de photo
+    addPhotoModal.style.display = 'block';
+  }
 
 
-// Fonction pour masquer la modale d'ajout de photo
-function closeAddPhotoModal() {
-  addPhotoModal.style.display = 'none';
-}
-
-// Fonction pour afficher la modale d'ajout de photo
-function openAddPhotoModal() {
-  addPhotoModal.style.display = 'block';
-}
+  // Fonction pour masquer la modale d'ajout de photo
+  function closeAddPhotoModal() {
+    addPhotoModal.style.display = 'none';
+    
+  }
+  // Écouter l'événement de clic sur le bouton de fermeture de la modale d'ajout de photo
+  closeButton.addEventListener('click', closeAddPhotoModal);
 
 
-// Écouter l'événement de clic sur le bouton "Ajouter une photo" pour ouvrir la modale d'ajout de photo
-openAddPhotoModalButton.addEventListener('click', openAddPhotoModal);
 
-// Écouter l'événement de clic sur le bouton de fermeture de la modale d'ajout de photo
-closeButton.addEventListener('click', closeAddPhotoModal);
+  // Récupérer les données du formulaire
+const imageInput = document.getElementById('imageInput');
+const titleInput = document.getElementById('imageTitle');
 
 
-/** en utilisant la mm logique que pour ma modale 1, la modale deux ne veut pas fontionner */
+const imageFile = imageInput.files[0];
+const title = titleInput.value;
+
+
+// Créer un objet FormData pour envoyer les données de formulaire (y compris l'image) via la requête fetch
+const formData = new FormData();
+formData.append('image', imageFile);
+formData.append('title', title);
+
+
+// Envoi de la requête POST vers l'API
+fetch('http://localhost:5678/api/works', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ' + token, // Inclure le jeton d'accès dans l'en-tête de la requête si nécessaire
+  },
+  body: formData,
+})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Échec du téléchargement de l\'image sur le serveur.');
+    }
+    return response.json();
+  })
+  .then(nouvellePhoto => {
+    console.log('Nouvelle photo ajoutée :', nouvellePhoto);
+
+    // Rafraîchir la galerie avec les nouvelles données (optionnel)
+    recupererTravauxArchitecte();
+          // Rediriger vers la page d'accueil
+      window.location.href = './index.html';
+  })
+  .catch(error => {
+    console.error('Erreur lors du téléchargement de l\'image :', error);
+  });
+
+
+});
+
+  // Fonction pour récupérer les catégories via fetch
+  async function getCategories() {
+    try {
+      const response = await fetch('http://localhost:5678/api/categories');
+      const categories = await response.json();
+
+      // Appeler la fonction pour générer les options de la liste déroulante
+      generateCategoryOptions(categories);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des catégories :', error);
+    }
+  }
+
+  // Fonction pour générer les options de la liste déroulante
+  function generateCategoryOptions(categories) {
+    const imageCategorySelect = document.getElementById('imageCategory');
+
+    // Supprimer les options existantes
+    imageCategorySelect.innerHTML = '';
+
+    // Générer les options pour les catégories récupérées
+    categories.forEach(category => {
+      const option = document.createElement('option');
+      option.setAttribute('value', category.id);
+      option.textContent = category.name;
+      imageCategorySelect.appendChild(option);
+    });
+  }
+
+  // Appeler la fonction pour récupérer les catégories via fetch
+  getCategories();
+  recupererTravauxArchitecte();

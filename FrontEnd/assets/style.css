@@ -222,7 +222,9 @@ footer nav ul {
   }
 
 
-
+.hide{
+display: none;
+}
   .modal {
 	display: none;
 	position: fixed;
@@ -261,3 +263,55 @@ footer nav ul {
   .delete-icon{
 	color: #000;
   }
+
+#btnModifier{
+display: none;
+}
+
+
+
+#modal {
+  width: 630px;
+  height: 731px;
+  left: 405px;
+  border-radius: 10px;
+}
+
+
+.modal img {
+	width: 76.86280059814453px;
+	height: 102.56774139404297px;
+  }
+  
+
+  .modal .travail {
+	display: inline-block;
+	width: 76.86280059814453px;
+	height: 102.56774139404297px;
+	margin: 5px; 
+  }
+  
+
+  .modal .delete-icon {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	color: red;
+	cursor: pointer;
+  }
+  
+
+  .modal {
+	column-count: 5;
+	column-gap: 10px;
+  }
+
+
+/* Styles pour la modale "Ajouter une photo" */
+
+  .add-photo-modal {
+	display: none;
+
+}
+
+

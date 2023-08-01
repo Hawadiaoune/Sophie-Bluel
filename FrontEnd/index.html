@@ -19,7 +19,7 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li><a href="./login.html" id="loginLink">Login</a></li>  
+			<li id="loginLink"><a href="/FrontEnd/login.html">Login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -39,10 +39,10 @@
 		</article>
 
 
-<button id="btnModifier" style="display: none;">Modifier</button>
+<button id="btnModifier">Modifier</button>
 
-<div id="modal" class="modal">
-  <div class="modal-content">
+<div id="modal" class="modal hide">
+  <div id="modal-content">
     <span class="close">&times;</span>
 
 	<h3>Galerie photo</h3>
@@ -51,17 +51,9 @@
   
   </div>
   
-
-  <button id="openAddPhotoModalButton">Ajouter une photo</button>
-
-  <button id="deleteGalleryButton">Supprimer la galerie</button>
-  </div>
-
-
-
-<div id="addPhotoModal" class=" add-photo-modal">
+  <div id="addPhotoModal" class="modal add-photo-modal">
 	<div class="modal-content">
-	  <span class="close" >&times;</span>
+	  <span id="closeAddPhotoModalButton">&times;</span>
 	  <h3>Ajout photo</h3>
 
 	  <section>
@@ -76,11 +68,21 @@
 	  </section>
 	  <section>
 		<h4>Catégorie</h4>
-		<input type="text" name="category" id="imageCategory" />
+		<select name="category" id="imageCategory">
+		  <!-- Les options pour les catégories seront générées dynamiquement par JavaScript -->
+		</select>
 	  </section>
 	  <button id="saveImageButton">Valider</button>
 	</div>
   </div>
+  <button id="openAddPhotoModalButton">Ajouter une photo</button>
+
+  <button id="deleteGalleryButton">Supprimer la galerie</button>
+  </div>
+
+
+
+
   
 
   
