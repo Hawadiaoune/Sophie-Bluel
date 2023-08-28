@@ -7,6 +7,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/b6f99a8e46.js" crossorigin="anonymous"></script>
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">  
 	<script src="./script.js" defer></script>
@@ -41,15 +42,44 @@
 
 <button id="btnModifier">Modifier</button>
 
-<div id="modal" class="modal hide">
-  <div id="modal-content">
-    <span class="close">&times;</span>
-
-	<h3>Galerie photo</h3>
-	<div id="gallery">
-	</div>
+  <div id="modal" class="modal hide">
+	<div id="modal-content">
+	  <span class="close">&times;</span>
   
-  </div>
+	  <h3>Galerie photo</h3>
+	  <div id="gallery">
+	  </div>
+	
+	</div>
+	
+	<div id="addPhotoModal" class="add-photo-modal">
+	  <div id="modal-ajout">
+		<span id="closeAddPhotoModalButton">&times;</span>
+		<h3>Ajout photo</h3>
+  
+		<section>
+		  <h4>+Ajouter Photo, jpg, png, 4 Mo max</h4>
+		  <form id="addImageForm">
+			<input type="file" name="image" id="imageInput" accept="image/*">
+		  </form>
+		</section>
+		<section>
+		  <h4>Titre</h4>
+		  <input type="text" name="title" id="imageTitle" />
+		</section>
+		<section>
+		  <h4>Catégorie</h4>
+		  <select name="category" id="imageCategory">
+			<!-- Les options pour les catégories seront générées dynamiquement par JavaScript -->
+		  </select>
+		</section>
+		<button id="saveImageButton">Valider</button>
+	  </div>
+	</div>
+	<button id="openAddPhotoModalButton">Ajouter une photo</button>
+  
+	<button id="deleteGalleryButton">Supprimer la galerie</button>
+	</div>
   					
 
 	</section>
@@ -80,34 +110,7 @@
 		</form>
 	</section>
 
-	<div id="addPhotoModal" class="modal add-photo-modal">
-		<div class="modal-content">
-		  <span id="closeAddPhotoModalButton">&times;</span>
-		  <h3>Ajout photo</h3>
-	
-		  <section>
-			<h4>+Ajouter Photo, jpg, png, 4 Mo max</h4>
-			<form id="addImageForm">
-			  <input type="file" name="image" id="imageInput" accept="image/*">
-			</form>
-		  </section>
-		  <section>
-			<h4>Titre</h4>
-			<input type="text" name="title" id="imageTitle" />
-		  </section>
-		  <section>
-			<h4>Catégorie</h4>
-			<select name="category" id="imageCategory">
-			  <!-- Les options pour les catégories seront générées dynamiquement par JavaScript -->
-			</select>
-		  </section>
-		  <button id="saveImageButton">Valider</button>
-		</div>
-	  </div>
-	  <button id="openAddPhotoModalButton">Ajouter une photo</button>
-	
-	  <button id="deleteGalleryButton">Supprimer la galerie</button>
-	  </div>
+
 
 </main>
 
