@@ -155,7 +155,7 @@ margin: auto;
 	flex-direction: column;
 }
 
-#contact input {
+#contact input{
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
@@ -169,7 +169,7 @@ margin: auto;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"], button[type="submit"] {
+input[type="submit"], button[type="submit"], #openAddPhotoModalButton {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -236,6 +236,10 @@ display: none;
 	overflow: auto;
 	background-color: rgba(0, 0, 0, 0.5);
   }
+
+.modal h2{
+text-align: center;
+}
   
   .modal-content {
 	background-color: #fff;
@@ -312,6 +316,12 @@ display: none;
   .add-photo-modal {
 	display: none;
 
+}
+
+.option{
+display: flex;
+flex-direction: column;
+padding: 50px;
 }
 
 

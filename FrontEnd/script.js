@@ -196,6 +196,23 @@ function generateModalContent(travaux) {
 
   });
 };
+
+
+// Fonction pour restaurer l'intégralité de la galerie
+async function restaurerGalerie() {
+  try {
+    // Récupérez à nouveau les données des travaux depuis votre API
+    const response = await fetch('http://localhost:5678/api/works');
+    const travaux = await response.json();
+
+    // Mettez à jour la galerie avec les nouvelles données
+    // Vous pouvez utiliser la même fonction qui génère le contenu de la modale (generateModalContent)
+    generateModalContent(travaux);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des travaux :', error);
+  }
+}
+
 // Fonction pour supprimer une image via l'API
 async function deleteImage(imageId) {
   try {
@@ -210,11 +227,12 @@ async function deleteImage(imageId) {
     if (response.ok) {
       // La suppression a réussi
       // Supprimer l'élément de la photo du DOM correspondant
-      const photoElement = document.querySelector(`img[data-id="${imageId}"]`); //* attribut plus precis + css modales *//
+      const photoElement = document.querySelector(`img[data-id="${imageId}"]`); //* attribut plus precis + css modales*//
       console.log(photoElement);
       if (photoElement) {
         photoElement.remove();
       }
+      recupererTravauxArchitecte();
     } else {
       console.error('La suppression de l\'image a échoué :', response.status, response.statusText);
     }
@@ -223,25 +241,15 @@ async function deleteImage(imageId) {
   }
 }
 
-// récuperation des données de l'API via fetch + création de la variable contenant les nouveaux projets
-async function recupererTravauxArchitecte() {
-  try {
-    const response = await fetch('http://localhost:5678/api/works');
-    const travaux = await response.json(); // Convertit la réponse en JSON
-    ajouterTravauxAGalerie(travaux); // Traite les données récupérées et les ajoute à la galerie
-  } catch (error) {
-    console.error('Erreur lors de la récupération des travaux :', error);
-  }
-}
 
 
-// Appel de la fonction pour récupérer les travaux via fetch
+// Appel de la fonction pour récupérer les travaux via fetch + création de la variable contenant les nouveaux projets
 async function recupererTravauxArchitecte() {
   try {
     const response = await fetch('http://localhost:5678/api/works');
     const travaux = await response.json();
     generateModalContent(travaux); // Appel de la fonction pour générer le contenu de la modale avec les travaux
-    ajouterTravauxAGalerie(travaux);
+    ajouterTravauxAGalerie(travaux); // Traite les données récupérées et les ajoute à la galerie
   } catch (error) {
     console.error('Erreur lors de la récupération des travaux :', error);
   }
@@ -261,7 +269,6 @@ modifierButton.addEventListener('click', () => {
 
 
 
-
 document.addEventListener('DOMContentLoaded', function () {
   const modal = document.getElementById('modal');
   const modalContent = document.getElementById('modal-content');
@@ -270,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const openAddPhotoModalButton = document.getElementById('openAddPhotoModalButton');
   const saveImageButton = document.getElementById('saveImageButton');
 
-  // Ajoutez un écouteur d'événement pour le clic sur le bouton "Ajouter une photo"
+  // Ajoute un écouteur d'événement pour le clic sur le bouton "Ajouter une photo"
   openAddPhotoModalButton.addEventListener('click', openAddPhotoModal);
 
   // Fonction pour afficher la modale d'ajout de photo
@@ -284,14 +291,21 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-  // Fonction pour masquer la modale d'ajout de photo
-  function closeAddPhotoModal() {
-    addPhotoModal.style.display = 'none';
-    
-  }
+ // Fonction pour masquer la modale d'ajout de photo
+ function closeAddPhotoModal() {
+  addPhotoModal.style.display = 'none';
+  // Réafficher la galerie photo
+  modalContent.style.display = 'block';
+}
   // Écouter l'événement de clic sur le bouton de fermeture de la modale d'ajout de photo
   closeButton.addEventListener('click', closeAddPhotoModal);
 
+  // Écouter l'événement de clic en dehors de la modale pour la fermer
+  window.addEventListener('click', function (event) {
+    if (event.target === addPhotoModal) {
+      closeAddPhotoModal();
+    }
+  });
 
 
   // Récupérer les données du formulaire
@@ -309,6 +323,7 @@ formData.append('image', imageFile);
 formData.append('title', title);
 
 
+
 // Envoi de la requête POST vers l'API
 fetch('http://localhost:5678/api/works', {
   method: 'POST',
@@ -323,10 +338,12 @@ fetch('http://localhost:5678/api/works', {
     }
     return response.json();
   })
+
+
   .then(nouvellePhoto => {
     console.log('Nouvelle photo ajoutée :', nouvellePhoto);
 
-    // Rafraîchir la galerie avec les nouvelles données (optionnel)
+    // Rafraîchir la galerie avec les nouvelles données
     recupererTravauxArchitecte();
           // Rediriger vers la page d'accueil
       window.location.href = './index.html';
@@ -371,4 +388,8 @@ fetch('http://localhost:5678/api/works', {
 
   // Appeler la fonction pour récupérer les catégories via fetch
   getCategories();
-  recupererTravauxArchitecte();
+
+
+
+ // Rafraîchir la galerie avec les nouvelles données
+ recupererTravauxArchitecte();
