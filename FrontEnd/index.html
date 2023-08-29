@@ -56,18 +56,18 @@
 	  <div id="modal-ajout">
 		<span id="closeAddPhotoModalButton">&times;</span>
 		<h2>Ajout photo</h2>
-  
-		<section>
+		<div class="formulaire"> 
+		<section id="ajoutphoto">
 		  <h4>+Ajouter Photo, jpg, png, 4 Mo max</h4>
 		  <form id="addImageForm">
 			<input type="file" name="image" id="imageInput" accept="image/*">
 		  </form>
 		</section>
-		<section>
+		<section id="titremodal">
 		  <h4>Titre</h4>
 		  <input type="text" name="title" id="imageTitle" />
 		</section>
-		<section>
+		<section id="categ">
 		  <h4>Catégorie</h4>
 		  <select name="category" id="imageCategory">
 			<!-- Les options pour les catégories seront générées dynamiquement par JavaScript -->
@@ -75,6 +75,7 @@
 		</section>
 		<button id="saveImageButton">Valider</button>
 	  </div>
+	</div>
 	</div>
 	<div class="option"> 
 	<button id="openAddPhotoModalButton">Ajouter une photo</button>
