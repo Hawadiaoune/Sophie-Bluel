@@ -129,7 +129,7 @@ window.addEventListener('load', updateLoginButton);
 loginLink.addEventListener('click', handleLoginLogout);
 
 
-
+/*
 //* Modale 1
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -212,19 +212,7 @@ function generateModalContent(travaux) {
 };
 
 
-// Fonction pour restaurer l'intégralité de la galerie
-async function restaurerGalerie() {
-  try {
-    // Récupérez à nouveau les données des travaux depuis votre API
-    const response = await fetch('http://localhost:5678/api/works');
-    const travaux = await response.json();
 
-    // Mettez à jour la galerie avec les nouvelles données
-    generateModalContent(travaux);
-  } catch (error) {
-    console.error('Erreur lors de la récupération des travaux :', error);
-  }
-}
 /*
 
 // Fonction pour supprimer une image via l'API
@@ -254,7 +242,7 @@ async function deleteImage(imageId) {
     console.error('Erreur lors de la suppression de l\'image :', error);
   }
 }
-*/
+/*
 async function deleteImage(imageId) {
   try {
     const response = await fetch(`http://localhost:5678/api/works/${imageId}`, {
@@ -282,7 +270,7 @@ async function deleteImage(imageId) {
   }
 }
 
-
+*/
 // Appel de la fonction pour récupérer les travaux via fetch + création de la variable contenant les nouveaux projets
 async function recupererTravauxArchitecte() {
   try {
@@ -304,7 +292,7 @@ modifierButton.addEventListener('click', () => {
 });
 
 
-
+/*
 //* Deuxieme modale ajout photo
 
 
@@ -441,7 +429,7 @@ fetch('http://localhost:5678/api/works', {
  
 
 
-
+*/
 
 
 
