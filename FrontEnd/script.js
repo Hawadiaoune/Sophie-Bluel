@@ -129,7 +129,7 @@ window.addEventListener('load', updateLoginButton);
 loginLink.addEventListener('click', handleLoginLogout);
 
 
-/*
+
 //* Modale 1
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -174,7 +174,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Fonction pour générer le contenu de la modale avec la galerie des travaux
 function generateModalContent(travaux) {
-  const modal = document.getElementById('modal-content');
+
+// Récupérer l'élément "Gallery" dans lequel  ajouter les travaux
+const gallery = document.getElementById('gallery');
 
 
   // Générer le contenu pour chaque travail
@@ -188,7 +190,7 @@ function generateModalContent(travaux) {
 
     travailElement.setAttribute('data-categoryId', travail.categoryId);
 
-    ajouterTravauxAGalerie(travaux);
+    /*ajouterTravauxAGalerie(travaux);*/
 
     // Ajouter l'icône poubelle pour supprimer la photo
     const deleteIcon = document.createElement('i');
@@ -198,22 +200,22 @@ function generateModalContent(travaux) {
     console.log(deleteIcon);
 
   // Ajouter le bouton editer
-    const editButton = document.createElement('button');
-    editButton.classList.add('edit-button');
-    editButton.textContent = 'Éditer';
-    travailElement.appendChild(editButton);
+    const editText = document.createElement('span');
+    editText.classList.add('edit-text');
+    editText.textContent = 'éditer';
+    travailElement.appendChild(editText);
 
 
     // Ajouter la div du travail à la modale
-    modal.appendChild(travailElement);
 
+    gallery.appendChild(travailElement);
 
   });
 };
 
 
 
-/*
+
 
 // Fonction pour supprimer une image via l'API
 async function deleteImage(imageId) {
@@ -234,34 +236,7 @@ async function deleteImage(imageId) {
       if (photoElement) {
         photoElement.remove();
       }
-      recupererTravauxArchitecte();
-    } else {
-      console.error('La suppression de l\'image a échoué :', response.status, response.statusText);
-    }
-  } catch (error) {
-    console.error('Erreur lors de la suppression de l\'image :', error);
-  }
-}
-/*
-async function deleteImage(imageId) {
-  try {
-    const response = await fetch(`http://localhost:5678/api/works/${imageId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: 'Bearer ' + token,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (response.ok) {
-      // La suppression a réussi
-      // Supprimer l'élément de la photo du DOM correspondant
-      const photoElement = document.querySelector(`img[data-id="${imageId}"]`);
-      console.log(photoElement);
-      if (photoElement) {
-        photoElement.remove();
-      }
-      // Pas besoin de restaurer la galerie ici, car l'image est déjà supprimée du DOM
+     /* recupererTravauxArchitecte();*/
     } else {
       console.error('La suppression de l\'image a échoué :', response.status, response.statusText);
     }
@@ -270,7 +245,6 @@ async function deleteImage(imageId) {
   }
 }
 
-*/
 // Appel de la fonction pour récupérer les travaux via fetch + création de la variable contenant les nouveaux projets
 async function recupererTravauxArchitecte() {
   try {
@@ -285,14 +259,15 @@ async function recupererTravauxArchitecte() {
 
 // Écouter l'événement de clic sur le bouton "Modifier" pour ouvrir la modale
 const modifierButton = document.getElementById('btnModifier');
+const overlay = document.querySelector('.overlay');
 modifierButton.addEventListener('click', () => {
   const modal = document.getElementById('modal');
   modal.style.display = 'block'; // Afficher la modale lorsque le bouton "Modifier" est cliqué
-
+  overlay.classList.add('overlay-open');
 });
 
 
-/*
+
 //* Deuxieme modale ajout photo
 
 
@@ -304,11 +279,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const closeButton = document.getElementById('closeAddPhotoModalButton');
   const openAddPhotoModalButton = document.getElementById('openAddPhotoModalButton');
   const saveImageButton = document.getElementById('saveImageButton');
+  const overlay = document.querySelector('.overlay');
 
   
 
   // Ajoute un écouteur d'événement pour le clic sur le bouton "Ajouter une photo"
   openAddPhotoModalButton.addEventListener('click', openAddPhotoModal);
+
 
   // Fonction pour afficher la modale d'ajout de photo
   function openAddPhotoModal() {
@@ -321,6 +298,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Masquer le bouton "Ajouter une photo"
   openAddPhotoModalButton.style.display = 'none';
+
+  deleteGalleryButton.style.display = 'none';
+
   }
 
 
@@ -330,15 +310,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Réafficher la galerie photo
   modalContent.style.display = 'block';
+
 }
+
   // Écouter l'événement de clic sur le bouton de fermeture de la modale d'ajout de photo
   closeButton.addEventListener('click', closeAddPhotoModal);
+
 
   // Écouter l'événement de clic en dehors de la modale pour la fermer
   window.addEventListener('click', function (event) {
     if (event.target === addPhotoModal) {
       closeAddPhotoModal();
     }
+    overlay.classList.remove('overlay-open');
   });
 
 
@@ -376,9 +360,9 @@ fetch('http://localhost:5678/api/works', {
 
   .then(nouvellePhoto => {
     console.log('Nouvelle photo ajoutée :', nouvellePhoto);
-
+/*
     // Rafraîchir la galerie avec les nouvelles données
-    recupererTravauxArchitecte();
+    recupererTravauxArchitecte();*/
           // Rediriger vers la page d'accueil
       window.location.href = './index.html';
   })
@@ -420,16 +404,14 @@ fetch('http://localhost:5678/api/works', {
   }
   
 
-  // Appeler la fonction pour récupérer les catégories via fetch
   getCategories();
-
 
 
 
  
 
 
-*/
+
 
 
 

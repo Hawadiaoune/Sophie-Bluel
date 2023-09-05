@@ -13,7 +13,7 @@
 	<script src="./script.js" defer></script>
 
 </head>
-<body>
+<body class="overlay overlay-open">
 <header>
 	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
 	<nav>
@@ -58,18 +58,19 @@
 		<h2>Ajout photo</h2>
 		<div class="formulaire"> 
 		<section id="ajoutphoto">
-		  <h4>+Ajouter Photo, jpg, png, 4 Mo max</h4>
 		  <form id="addImageForm">
-			<input type="file" name="image" id="imageInput" accept="image/*">
+			<i class="fa-solid fa-image"></i>
+			<input class="ajout"  type="file" name="image" id="imageInput" accept="image/*">
+			<h4>jpg, png, 4 Mo max</h4>
 		  </form>
 		</section>
 		<section id="titremodal">
 		  <h4>Titre</h4>
-		  <input type="text" name="title" id="imageTitle" />
+		  <input class="textajout" type="text" name="title" id="imageTitle" />
 		</section>
 		<section id="categ">
 		  <h4>Catégorie</h4>
-		  <select name="category" id="imageCategory">
+		  <select class="categajout" name="category" id="imageCategory">
 			<!-- Les options pour les catégories seront générées dynamiquement par JavaScript -->
 		  </select>
 		</section>

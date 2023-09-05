@@ -155,7 +155,7 @@ margin: auto;
 	flex-direction: column;
 }
 
-#contact input{
+#contact input, .textajout, .categajout, #saveImageButton, #openAddPhotoModalButton{
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
@@ -220,123 +220,153 @@ footer nav ul {
 }
 
 #portfolio.hide-category-buttons .category-button {
-	display: none;
-	width: 585px;
+display: none;
+width: 585px;
 height: 37px;
 top: 812px;
 left: 427px;
 border-radius: 60px;
 border: 1px;
 
-  }
+}
 
+
+/* Style pour la superposition d'arrière-plan */
+.overlay {
+width: 100%;
+height: 100%;
+}
+
+/* lorsque la modale est ouverte */
+.overlay-open {
+display: block;
+z-index: 1000; 
+background-color: rgba(0, 0, 0, 0.2); 
+}
+
+
+/*Modale 1 */
+
+
+#modal {
+position: absolute;
+width: 630px;
+height: 731px;
+left: 405px;
+border-radius: 10px;
+top: 660px;
+background-color: #fff;
+}
 
 .hide{
 display: none;
 }
-  .modal {
-	display: none;
-	position: fixed;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgba(0, 0, 0, 0.5);
-  }
+
+.modal {
+display: none;
+position: fixed;
+z-index: 1;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgba(0, 0, 0, 0.5);
+}
 
 .modal h2{
-text-align: center;
-width: 173px;
+/*width: 173px;
 height: 30px;
 top: 720px;
-left: 634px;
-margin-bottom: 0%;
+left: 634px;*/
+font-family: Work Sans;
+font-size: 26px;
+font-weight: 400;
+line-height: 30px;
+letter-spacing: 0em;
+text-align: center;
+
 }
   
 #modal-content {
-	background-color: #fff;
-	margin: 15% auto;
-	padding: 20px;
-	border: 1px solid #888;
-	width: 80%;
-	height: 30px;
-  }
+background-color: #fff;
+margin: 5% auto;
+padding: 20px;
+width: 80%;
+height: 30px;
+}
   
-  .close {
-	color: #888;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
-	cursor: pointer;
-  }
+
+.close {
+color: #888;
+float: right;
+font-size: 28px;
+font-weight: bold;
+cursor: pointer;
+}
   
-  .close:hover,
-  .close:focus {
-	color: #000;
-	text-decoration: none;
-	cursor: pointer;
-  }
+.close:hover,
+.close:focus {
+color: #000;
+text-decoration: none;
+cursor: pointer;
+}
   
-  .delete-icon{
-	color: #000;
-  }
+.delete-icon{
+color: #000;
+}
 
 #btnModifier{
 display: none;
 }
 
 .travail-modal{
-top: 796px;
 position: relative;
 width: 76.86280059814453px;
 display: flex;
 flex-direction: row;
-}
+width: 77px;
+height: 115px;
 
-#modal {
-	position: absolute;
-  width: 630px;
-  height: 731px;
-  left: 405px;
-  border-radius: 10px;
-top: 660px;
-background-color: #fff;
+
 }
 
 
-.modal img {
-	width: 76.86280059814453px;
-	height: 102.56774139404297px;
-  }
+
+.travail-modal img {
+
+height: 102.56774139404297px;
+position: absolute;
+width: 76px;
+}
   
 
-  .modal .travail {
-	display: inline-block;
-	width: 76.86280059814453px;
-	height: 102.56774139404297px;
-	margin: 5px; 
-  }
+.modal .travail {
+display: inline-block;
+width: 76.86280059814453px;
+height: 102.56774139404297px;
+margin: 5px; 
+}
   
 
-  .modal .delete-icon {
-	position: absolute;
-	top: 5px;
-	right: 5px;
-	color: red;
-	cursor: pointer;
-  }
+.modal .deleteIcon {
+top: 5px;
+position: relative;
+left: 45px;
+}
   
-
-.modal {
-	column-count: 5;
-	column-gap: 10px;
-	
-  }
-
+.edit-text{
+position: relative;
+top: 105px;
+}
 
 /* Styles pour la modale "Ajouter une photo" */
+
+.formulaire{
+display: flex;
+flex-direction: column;
+align-items: center;
+}
 
 .add-photo-modal {
 display: none;
@@ -364,29 +394,87 @@ width: 230px;
 height: 17px;
 top: 1326px;
 left: 604px;
+align-items: center;
+display: flex;
+justify-content: center;
 }
+
+
 #ajoutphoto{
 width: 420px;
 height: 169px;
 top: 786px;
 left: 510px;
 border-radius: 3px;
+background: #E8F1F6;
+margin: 0;
 }
 
-#titremodal{
+#titremodal {
 width: 420px;
-height: 51px;
-top: 1011px;
-left: 510px;
 }
 
-#categ{
+
+.textajout, .categajout{
 width: 420px;
-height: 51px;
-top: 1109px;
-left: 510px;
+
 }
 
-.formulaire{
 
+
+#titremodal h4{
+font-family: Work Sans;
+font-size: 14px;
+font-weight: 500;
+line-height: 16px;
+letter-spacing: 0em;
+text-align: left;
+}
+
+#categ h4{
+font-family: Work Sans;
+font-size: 14px;
+font-weight: 500;
+line-height: 16px;
+letter-spacing: 0em;
+text-align: left;
+
+}
+
+#gallery{
+display: flex;
+flex-wrap: wrap;
+gap: 20px; 
+justify-content: space-between;
+}
+
+
+#closeAddPhotoModalButton{
+width: 25px;
+position: relative;
+top: 20px;
+left: 588px;
+height: 31px;
+}
+
+.ajout{
+border-radius: 50px;
+}
+
+#addImageForm{
+position: relative;
+align-items: center; 
+align-content: center; 
+text-align: center;
+display: flex;
+flex-direction: column;
+}
+
+#saveImageButton{
+height: 36px;
+}
+
+.fa-image{
+width: 76px;
+height: 76px;
 }
