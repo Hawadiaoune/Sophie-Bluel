@@ -586,3 +586,16 @@ async function recupererTravauxArchitecte() {
 recupererTravauxArchitecte();
 
 */
+
+/*
+// Sélection le bouton de retour
+const backToGalleryButton = document.getElementById('backToGalleryButton');
+
+// Écoute l'événement de clic sur le bouton de retour
+backToGalleryButton.addEventListener('click', () => {
+    // Masque la modale d'ajout de photo
+    addPhotoModal.style.display = 'none';
+
+    // Réaffiche la galerie photo
+    modalContent.style.display = 'block';
+});*/

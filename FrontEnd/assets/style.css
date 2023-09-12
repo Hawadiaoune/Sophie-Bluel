@@ -189,31 +189,35 @@ footer nav ul {
 	margin: 2em
 }
 
+.boutons{
+	display: flex;
+	gap: 25px;
+	margin-bottom: 35px;
+	justify-content: center;
+}
+
 .bouton{
-	height: 50px;
+	height: 40px;
 	font-size: 1.2em;
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
-	margin: 2em auto;
 	width: 180px;
 	text-align: center;
 	border-radius: 60px;
 }
 
+
+
 .bouton1 {
-	height: 50px;
+	height: 40px;
 	font-size: 1.2em;
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	font-family: 'Syne';
 	font-weight: 700;
 	color:#1D6154; 
 	background-color: white;
-	margin: 2em auto;
+
 	width: auto;
 	text-align: center;
 	border-radius: 60px;
@@ -235,6 +239,7 @@ border: 1px;
 .overlay {
 width: 100%;
 height: 100%;
+
 }
 
 /* lorsque la modale est ouverte */
@@ -275,10 +280,6 @@ background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal h2{
-/*width: 173px;
-height: 30px;
-top: 720px;
-left: 634px;*/
 font-family: Work Sans;
 font-size: 26px;
 font-weight: 400;
@@ -297,7 +298,7 @@ height: 30px;
 }
   
 
-.close {
+.close, #closeAddPhotoModalButton {
 color: #888;
 float: right;
 font-size: 28px;
@@ -306,7 +307,7 @@ cursor: pointer;
 }
   
 .close:hover,
-.close:focus {
+.close:focus, #closeAddPhotoModalButton {
 color: #000;
 text-decoration: none;
 cursor: pointer;
@@ -316,8 +317,24 @@ cursor: pointer;
 color: #000;
 }
 
+.modification{
+position: relative;
+bottom: 53px;
+padding-left: 10px;
+}
+.fa-pen-to-square{
+position: relative;
+right: 70px;
+}
+
+
 #btnModifier{
 display: none;
+position: relative;
+left: 701px;
+bottom: 1;
+border: none;
+background: white;
 }
 
 .travail-modal{
@@ -327,8 +344,6 @@ display: flex;
 flex-direction: row;
 width: 77px;
 height: 115px;
-
-
 }
 
 
@@ -361,6 +376,20 @@ top: 105px;
 }
 
 /* Styles pour la modale "Ajouter une photo" */
+
+/* Styles pour le bouton de retour */
+#backToGalleryButton {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#backToGalleryButton::before {
+    content: "\2190"; /* Code Unicode pour une flèche gauche */
+}
+
+
 
 .formulaire{
 display: flex;
@@ -450,11 +479,8 @@ justify-content: space-between;
 
 
 #closeAddPhotoModalButton{
-width: 25px;
 position: relative;
-top: 20px;
-left: 588px;
-height: 31px;
+right: 10px;
 }
 
 .ajout{
@@ -475,6 +501,77 @@ height: 36px;
 }
 
 .fa-image{
-width: 76px;
-height: 76px;
+font-size: 76px;
+color: silver;
+padding-top: 20px;
 }
+
+.texteForm{
+font-family: Work Sans;
+font-size: 10px;
+font-weight: 400;
+line-height: 12px;
+letter-spacing: 0em;
+text-align: center;
+
+}
+
+#addImageForm input{
+border-radius: 50px;
+}
+
+
+/*Login*/
+
+#login h2{
+text-align: center;
+}
+
+#loginForm{
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+align-items: center;
+
+}
+
+#loginForm input{
+width: 379px;
+height: 51px;
+top: 338px;
+left: 530px;
+box-shadow: 0px 4px 14px 0px #00000017;
+margin-bottom: 20px;
+}
+
+#loginForm label{
+width: 92px;
+height: 16px;
+right: 145px;
+font-family: Work Sans;
+font-size: 14px;
+font-weight: 500;
+line-height: 16px;
+letter-spacing: 0em;
+text-align: left;
+position: relative;
+padding: 10px;
+}
+
+.boutonLog{
+width: 179px;
+height: 36px;
+}
+
+#loginMessage{
+font-family: Work Sans;
+font-size: 14px;
+font-weight: 500;
+line-height: 16px;
+letter-spacing: 0em;
+text-align: left;
+text-decoration: underline;
+
+}
+
+

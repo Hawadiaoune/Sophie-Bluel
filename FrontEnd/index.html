@@ -40,7 +40,7 @@
 		</article>
 
 
-<button id="btnModifier">Modifier</button>
+
 
   <div id="modal" class="modal hide">
 	<div id="modal-content">
@@ -54,14 +54,15 @@
 	
 	<div id="addPhotoModal" class="add-photo-modal">
 	  <div id="modal-ajout">
+<button id="backToGalleryButton"></button>
 		<span id="closeAddPhotoModalButton">&times;</span>
 		<h2>Ajout photo</h2>
 		<div class="formulaire"> 
 		<section id="ajoutphoto">
 		  <form id="addImageForm">
-			<i class="fa-solid fa-image"></i>
+			<span class="iconeImage"><i class="fa-solid fa-image"></i></span>
 			<input class="ajout"  type="file" name="image" id="imageInput" accept="image/*">
-			<h4>jpg, png, 4 Mo max</h4>
+			<h4 class="texteForm">jpg, png, 4 Mo max</h4>
 		  </form>
 		</section>
 		<section id="titremodal">
@@ -88,11 +89,17 @@
 	</section>
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
+		<div class="modification"> 
+		<button id="btnModifier">modifier
+			<i class="fa-regular fa-pen-to-square"></i>
+		</button>
+		</div>
+		<div class="boutons"> 
 		<button class="bouton category-button" data-categoryId="tous">Tous</button>
 		<button class="bouton1 category-button" data-categoryId="1">Objets</button>
 		<button class="bouton1 category-button" data-categoryId="2">Appartements</button>
 		<button class="bouton1 category-button" data-categoryId="3">Hotels & restaurants</button>
-		
+		</div>
 		<div class="gallery"  id="galerie-architecte">
 		</div>
 	</section>

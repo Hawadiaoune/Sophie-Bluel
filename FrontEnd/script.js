@@ -134,6 +134,7 @@ loginLink.addEventListener('click', handleLoginLogout);
 
 document.addEventListener('DOMContentLoaded', function() {
   const btnModifier = document.getElementById('btnModifier');
+  const iconeModifier = document.getElementsByClassName('fa-pen-to-square')
   const modal = document.getElementById('modal');
   const closeBtn = document.querySelector('.close');
 
@@ -143,6 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (token) {
     // Afficher le bouton "Modifier" si l'utilisateur est connecté
     btnModifier.style.display = 'block';
+
   }
 
   // Ajouter un écouteur d'événement pour le clic sur le bouton "Modifier"
@@ -284,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
 
   // Ajoute un écouteur d'événement pour le clic sur le bouton "Ajouter une photo"
-  openAddPhotoModalButton.addEventListener('click', openAddPhotoModal);
+ /* openAddPhotoModalButton.addEventListener('click', openAddPhotoModal);
 
 
   // Fonction pour afficher la modale d'ajout de photo
@@ -313,18 +315,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 }
 
+
+
   // Écouter l'événement de clic sur le bouton de fermeture de la modale d'ajout de photo
   closeButton.addEventListener('click', closeAddPhotoModal);
 
 
   // Écouter l'événement de clic en dehors de la modale pour la fermer
   window.addEventListener('click', function (event) {
-    if (event.target === addPhotoModal) {
+    if (event.target === modal) {
       closeAddPhotoModal();
     }
     overlay.classList.remove('overlay-open');
   });
 
+  
 
   // Récupérer les données du formulaire
 const imageInput = document.getElementById('imageInput');
@@ -360,15 +365,104 @@ fetch('http://localhost:5678/api/works', {
 
   .then(nouvellePhoto => {
     console.log('Nouvelle photo ajoutée :', nouvellePhoto);
-/*
+
     // Rafraîchir la galerie avec les nouvelles données
-    recupererTravauxArchitecte();*/
+    recupererTravauxArchitecte();
           // Rediriger vers la page d'accueil
       window.location.href = './index.html';
   })
   .catch(error => {
     console.error('Erreur lors du téléchargement de l\'image :', error);
   });
+*/
+
+// ...
+
+// Ajoute un écouteur d'événement pour le clic sur le bouton "Ajouter une photo"
+openAddPhotoModalButton.addEventListener('click', openAddPhotoModal);
+
+// Fonction pour afficher la modale d'ajout de photo
+function openAddPhotoModal() {
+  // Masquer la galerie photo
+  modalContent.style.display = 'none';
+
+  // Afficher la modale d'ajout de photo
+  addPhotoModal.style.display = 'block';
+
+  // Masquer le bouton "Ajouter une photo"
+  openAddPhotoModalButton.style.display = 'none';
+  deleteGalleryButton.style.display = 'none';
+}
+
+ // Fonction pour masquer la modale d'ajout de photo
+ function closeAddPhotoModal() {
+  addPhotoModal.style.display = 'none';
+
+  // Réafficher la galerie photo
+  modalContent.style.display = 'block';
+
+}
+
+
+
+  // Écouter l'événement de clic sur le bouton de fermeture de la modale d'ajout de photo
+  closeButton.addEventListener('click', closeAddPhotoModal);
+
+
+  // Écouter l'événement de clic en dehors de la modale pour la fermer
+  window.addEventListener('click', function (event) {
+    if (event.target === modal) {
+      closeAddPhotoModal();
+    }
+    overlay.classList.remove('overlay-open');
+  });
+
+  
+  // Ajouter un gestionnaire d'événements pour le clic sur le bouton "Valider"
+  saveImageButton.addEventListener('click', function(event) {
+    event.preventDefault(); // Empêche la soumission par défaut du formulaire
+
+    // Récupérer les données du formulaire
+    const imageInput = document.getElementById('imageInput');
+    const titleInput = document.getElementById('imageTitle');
+
+    const imageFile = imageInput.files[0];
+    const title = titleInput.value;
+
+    // Créer un objet FormData pour envoyer les données de formulaire (y compris l'image) via la requête fetch
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    formData.append('title', title);
+
+    // Envoi de la requête POST vers l'API
+    fetch('http://localhost:5678/api/works', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token, // Inclure le jeton d'accès dans l'en-tête de la requête si nécessaire
+      },
+      body: formData,
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Échec du téléchargement de l\'image sur le serveur.');
+        }
+        return response.json();
+      })
+      .then(nouvellePhoto => {
+        console.log('Nouvelle photo ajoutée :', nouvellePhoto);
+
+        // Rafraîchir la galerie avec les nouvelles données
+        recupererTravauxArchitecte();
+        
+        // Rediriger vers la page d'accueil
+        window.location.href = './index.html';
+      })
+      .catch(error => {
+        console.error('Erreur lors du téléchargement de l\'image :', error);
+      });
+  });
+
+
 
 });
 
@@ -391,6 +485,13 @@ fetch('http://localhost:5678/api/works', {
 
     // Supprimer les options existantes
     imageCategorySelect.innerHTML = '';
+
+    //Ajouter une option case vide 
+    const emptyOption = document.createElement('option');
+  emptyOption.setAttribute('value', ''); // La valeur vide
+  emptyOption.textContent = ''; // Texte vide
+  imageCategorySelect.appendChild(emptyOption);
+
 
     // Générer les options pour les catégories récupérées
     categories.forEach(category => {
