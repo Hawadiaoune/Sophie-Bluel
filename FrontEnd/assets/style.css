@@ -116,6 +116,7 @@ li:hover {
 }
 #introduction h2 {
 	margin-bottom: 1em;
+	color: #000000;
 }
 
 #introduction p {
@@ -197,30 +198,31 @@ footer nav ul {
 }
 
 .bouton{
-	height: 40px;
-	font-size: 1.2em;
-	font-family: 'Syne';
-	font-weight: 700;
-	color: white;
-	background-color: #1D6154;
-	width: 180px;
-	text-align: center;
-	border-radius: 60px;
+height: 40px;
+font-size: 1.2em;
+font-family: 'Syne';
+font-weight: 700;
+color: white;
+background-color: #1D6154;
+width: 180px;
+text-align: center;
+border-radius: 60px;
+border: 1px solid #1D6154
 }
 
 
 
 .bouton1 {
-	height: 40px;
-	font-size: 1.2em;
-	font-family: 'Syne';
-	font-weight: 700;
-	color:#1D6154; 
-	background-color: white;
-
-	width: auto;
-	text-align: center;
-	border-radius: 60px;
+height: 40px;
+font-size: 1.2em;
+font-family: 'Syne';
+font-weight: 700;
+color:#1D6154; 
+background-color: white;
+width: auto;
+text-align: center;
+border-radius: 60px;
+border: 1px solid #1D6154
 }
 
 #portfolio.hide-category-buttons .category-button {
@@ -231,24 +233,23 @@ top: 812px;
 left: 427px;
 border-radius: 60px;
 border: 1px;
-
 }
 
 
-/* Style pour la superposition d'arrière-plan */
+/* Style pour la superposition d'arrière-plan 
 .overlay {
 width: 100%;
 height: 100%;
 
 }
 
-/* lorsque la modale est ouverte */
+
 .overlay-open {
 display: block;
 z-index: 1000; 
 background-color: rgba(0, 0, 0, 0.2); 
 }
-
+*/
 
 /*Modale 1 */
 
@@ -259,8 +260,9 @@ width: 630px;
 height: 731px;
 left: 405px;
 border-radius: 10px;
-top: 660px;
+top: 518px;
 background-color: #fff;
+z-index: 20000;
 }
 
 .hide{
@@ -505,6 +507,10 @@ font-size: 76px;
 color: silver;
 padding-top: 20px;
 }
+
+.travail {
+display: block;
+} 
 
 .texteForm{
 font-family: Work Sans;

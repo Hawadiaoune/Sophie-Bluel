@@ -68,7 +68,6 @@ recupererTravauxArchitecte();
 //* Modale connexion/deconnexion
 
 
-
 // Sélectionne l'élément du lien de connexion/logout
 const loginLink = document.getElementById('loginLink');
 
@@ -79,7 +78,6 @@ if (token) {
   // Masque le lien de connexion et affichez le lien de déconnexion
   loginLink.textContent = 'Logout';
 }
-
 
 
 // Ajoutez un écouteur d'événement au lien de connexion/logout
@@ -134,17 +132,38 @@ loginLink.addEventListener('click', handleLoginLogout);
 
 document.addEventListener('DOMContentLoaded', function() {
   const btnModifier = document.getElementById('btnModifier');
-  const iconeModifier = document.getElementsByClassName('fa-pen-to-square')
   const modal = document.getElementById('modal');
   const closeBtn = document.querySelector('.close');
+  const boutonsCategories = document.querySelectorAll('#portfolio button');
+  const travaux = document.querySelectorAll('.travail');
+
+// Créer l'overlay
+const overlay = document.createElement('div');
+overlay.id = 'overlay';
+overlay.style.position = 'fixed';
+overlay.style.top = '0';
+overlay.style.left = '0';
+overlay.style.width = '100%';
+overlay.style.height = '100%';
+overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.4)'; // Noir avec 40% d'opacité
+overlay.style.zIndex = '1000'; //  l'overlay est au-dessus de tout le reste
+overlay.style.display = 'none'; // Initialement masqué
+
+// Ajoutez l'overlay au corps (body) du document
+document.body.appendChild(overlay);
+  
 
   // Vérifier si l'utilisateur est connecté
   const token = localStorage.getItem('token');
 
   if (token) {
     // Afficher le bouton "Modifier" si l'utilisateur est connecté
-    btnModifier.style.display = 'block';
 
+    boutonsCategories.forEach(bouton => {
+      bouton.style.display = 'none';
+    });
+    btnModifier.style.display = 'block';
+    
   }
 
   // Ajouter un écouteur d'événement pour le clic sur le bouton "Modifier"
@@ -157,6 +176,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Si un token est présent, cela signifie que l'utilisateur est connecté
     // Affiche la modale
     modal.style.display = 'block';
+    addPhotoModal.style.zIndex = '2000'; // Assurez-vous que la modale est au-dessus de l'overlay
+    // Affichez l'overlay lorsque la modale s'ouvre
+    overlay.style.display = 'block';
+
+
   } else {
     // Si aucun token n'est présent, cela signifie que l'utilisateur n'est pas connecté
     // Redirige vers la page de login
@@ -170,8 +194,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function fermerModal() {
     modal.style.display = 'none';
+      // Réinitialisez le z-index de la modale
+  addPhotoModal.style.zIndex = 'auto';
+  // Réaffichez l'overlay
+  overlay.style.display = 'none';
   }
 });
+
+
+
 
 
 // Fonction pour générer le contenu de la modale avec la galerie des travaux
@@ -199,7 +230,7 @@ const gallery = document.getElementById('gallery');
     deleteIcon.classList.add('fa-solid', 'fa-trash', 'deleteIcon');
     deleteIcon.addEventListener('click', () => deleteImage(travail.id)); // Appel de la fonction deleteImage avec l'ID du travail
     travailElement.appendChild(deleteIcon);
-    console.log(deleteIcon);
+    /*console.log(deleteIcon);*/
 
   // Ajouter le bouton editer
     const editText = document.createElement('span');
@@ -261,11 +292,9 @@ async function recupererTravauxArchitecte() {
 
 // Écouter l'événement de clic sur le bouton "Modifier" pour ouvrir la modale
 const modifierButton = document.getElementById('btnModifier');
-const overlay = document.querySelector('.overlay');
 modifierButton.addEventListener('click', () => {
   const modal = document.getElementById('modal');
   modal.style.display = 'block'; // Afficher la modale lorsque le bouton "Modifier" est cliqué
-  overlay.classList.add('overlay-open');
 });
 
 
@@ -281,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const closeButton = document.getElementById('closeAddPhotoModalButton');
   const openAddPhotoModalButton = document.getElementById('openAddPhotoModalButton');
   const saveImageButton = document.getElementById('saveImageButton');
-  const overlay = document.querySelector('.overlay');
+
 
   
 
@@ -326,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (event.target === modal) {
       closeAddPhotoModal();
     }
-    overlay.classList.remove('overlay-open');
+
   });
 
   
@@ -414,7 +443,12 @@ function openAddPhotoModal() {
     if (event.target === modal) {
       closeAddPhotoModal();
     }
-    overlay.classList.remove('overlay-open');
+    // Écouter l'événement de clic en dehors de la modale pour la fermer
+    document.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        closeAddPhotoModal();
+      }
+    });
   });
 
   
@@ -422,8 +456,13 @@ function openAddPhotoModal() {
   saveImageButton.addEventListener('click', function(event) {
     event.preventDefault(); // Empêche la soumission par défaut du formulaire
 
+
     // Récupérer les données du formulaire
     const imageInput = document.getElementById('imageInput');
+    if (!imageInput.files || imageInput.files.length === 0) {
+      alert("Veuillez sélectionner une image avant de valider.");
+      return;
+    }
     const titleInput = document.getElementById('imageTitle');
 
     const imageFile = imageInput.files[0];
