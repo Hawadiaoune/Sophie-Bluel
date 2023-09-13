@@ -116,7 +116,6 @@ li:hover {
 }
 #introduction h2 {
 	margin-bottom: 1em;
-	color: #000000;
 }
 
 #introduction p {
@@ -288,7 +287,7 @@ font-weight: 400;
 line-height: 30px;
 letter-spacing: 0em;
 text-align: center;
-
+color: #000000;
 }
   
 #modal-content {

@@ -169,17 +169,32 @@ document.body.appendChild(overlay);
   // Ajouter un écouteur d'événement pour le clic sur le bouton "Modifier"
   btnModifier.addEventListener('click', ouvrirModal);
 
+// Ajoutez un gestionnaire d'événements pour le clic en dehors de la modale
+document.addEventListener('click', function (event) {
+  if (event.target === modal) {
+    fermerModal();
+  }
+});
+
+
   function ouvrirModal() {
-    // Vérifiez si un token d'authentification est présent dans le stockage local
+    
+    // Vérifier si un token d'authentification est présent dans le stockage local
   const token = localStorage.getItem('token');
   if (token) {
+    // Ajouter un écouteur d'événements pour le clic en dehors de la modale pour la fermer
+
+
     // Si un token est présent, cela signifie que l'utilisateur est connecté
     // Affiche la modale
     modal.style.display = 'block';
     addPhotoModal.style.zIndex = '2000'; // Assurez-vous que la modale est au-dessus de l'overlay
-    // Affichez l'overlay lorsque la modale s'ouvre
+    // Affiche l'overlay lorsque la modale s'ouvre
     overlay.style.display = 'block';
-
+    const travaux = document.querySelectorAll('.travail');
+    travaux.forEach(travail => {
+      travail.style.display = 'block';
+    });
 
   } else {
     // Si aucun token n'est présent, cela signifie que l'utilisateur n'est pas connecté
@@ -192,13 +207,19 @@ document.body.appendChild(overlay);
 
   closeBtn.addEventListener('click', fermerModal);
 
+
   function fermerModal() {
     modal.style.display = 'none';
       // Réinitialisez le z-index de la modale
   addPhotoModal.style.zIndex = 'auto';
   // Réaffichez l'overlay
   overlay.style.display = 'none';
+  const travaux = document.querySelectorAll('.travail');
+  travaux.forEach(travail => {
+    travail.style.display = 'block';
+  });
   }
+  
 });
 
 
@@ -269,7 +290,8 @@ async function deleteImage(imageId) {
       if (photoElement) {
         photoElement.remove();
       }
-     /* recupererTravauxArchitecte();*/
+      /*
+      recupererTravauxArchitecte();*/
     } else {
       console.error('La suppression de l\'image a échoué :', response.status, response.statusText);
     }
@@ -277,6 +299,7 @@ async function deleteImage(imageId) {
     console.error('Erreur lors de la suppression de l\'image :', error);
   }
 }
+
 
 // Appel de la fonction pour récupérer les travaux via fetch + création de la variable contenant les nouveaux projets
 async function recupererTravauxArchitecte() {
@@ -410,6 +433,14 @@ fetch('http://localhost:5678/api/works', {
 // Ajoute un écouteur d'événement pour le clic sur le bouton "Ajouter une photo"
 openAddPhotoModalButton.addEventListener('click', openAddPhotoModal);
 
+// Ajoutez un gestionnaire d'événements pour le clic en dehors de la modale
+document.addEventListener('click', function (event) {
+  if (event.target === addPhotoModal) {
+    closeAddPhotoModal();
+  }
+});
+
+
 // Fonction pour afficher la modale d'ajout de photo
 function openAddPhotoModal() {
   // Masquer la galerie photo
@@ -438,19 +469,6 @@ function openAddPhotoModal() {
   closeButton.addEventListener('click', closeAddPhotoModal);
 
 
-  // Écouter l'événement de clic en dehors de la modale pour la fermer
-  window.addEventListener('click', function (event) {
-    if (event.target === modal) {
-      closeAddPhotoModal();
-    }
-    // Écouter l'événement de clic en dehors de la modale pour la fermer
-    document.addEventListener('click', function(event) {
-      if (event.target === modal) {
-        closeAddPhotoModal();
-      }
-    });
-  });
-
   
   // Ajouter un gestionnaire d'événements pour le clic sur le bouton "Valider"
   saveImageButton.addEventListener('click', function(event) {
@@ -462,6 +480,7 @@ function openAddPhotoModal() {
     if (!imageInput.files || imageInput.files.length === 0) {
       alert("Veuillez sélectionner une image avant de valider.");
       return;
+      console.log('ne fonctionne pas');
     }
     const titleInput = document.getElementById('imageTitle');
 
