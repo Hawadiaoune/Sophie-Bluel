@@ -480,7 +480,6 @@ function openAddPhotoModal() {
     if (!imageInput.files || imageInput.files.length === 0) {
       alert("Veuillez sélectionner une image avant de valider.");
       return;
-      console.log('ne fonctionne pas');
     }
     const titleInput = document.getElementById('imageTitle');
 
@@ -497,6 +496,7 @@ function openAddPhotoModal() {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + token, // Inclure le jeton d'accès dans l'en-tête de la requête si nécessaire
+        'Content-Type': 'multipart/form-data',
       },
       body: formData,
     })
@@ -518,6 +518,7 @@ function openAddPhotoModal() {
       .catch(error => {
         console.error('Erreur lors du téléchargement de l\'image :', error);
       });
+      
   });
 
 
