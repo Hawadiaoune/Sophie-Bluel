@@ -474,7 +474,7 @@ function openAddPhotoModal() {
   saveImageButton.addEventListener('click', function(event) {
     event.preventDefault(); // Empêche la soumission par défaut du formulaire
 
-
+/*
     // Récupérer les données du formulaire
     const imageInput = document.getElementById('imageInput');
     if (!imageInput.files || imageInput.files.length === 0) {
@@ -526,7 +526,54 @@ function openAddPhotoModal() {
       })
       .catch(error => {
         console.error('Erreur lors du téléchargement de l\'image :', error);
-      });
+      });*/
+
+      // Récupérer les données du formulaire
+const imageInput = document.getElementById('imageInput');
+if (!imageInput.files || imageInput.files.length === 0) {
+  alert("Veuillez sélectionner une image avant de valider.");
+  return;
+}
+const titleInput = document.getElementById('imageTitle');
+
+const imageFile = imageInput.files[0];
+const title = titleInput.value;
+const imageCategorySelect = document.getElementById('imageCategory');
+
+// Créer un objet FormData pour envoyer les données de formulaire (y compris l'image) via la requête fetch
+const formData = new FormData();
+formData.append('image', imageFile); // Utilisez 'image' ici pour correspondre à la clé attendue dans le backend
+formData.append('title', title);
+formData.append('category', imageCategorySelect.value); // Utilisez 'category' ici pour correspondre à la clé attendue dans le backend
+
+// Envoi de la requête POST vers l'API
+fetch('http://localhost:5678/api/works', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ' + token, // Inclure le jeton d'accès dans l'en-tête de la requête si nécessaire
+  },
+  body: formData, // Utilisez formData comme corps de la requête
+})
+  .then(response => {
+    console.log(response);
+    if (!response.ok) {
+      throw new Error('Échec du téléchargement de l\'image sur le serveur.');
+    }
+    return response.json();
+  })
+  .then(nouvellePhoto => {
+    console.log('Nouvelle photo ajoutée :', nouvellePhoto);
+
+    // Rafraîchir la galerie avec les nouvelles données
+    recupererTravauxArchitecte();
+    
+    // Rediriger vers la page d'accueil
+    window.location.href = './index.html';
+  })
+  .catch(error => {
+    console.error('Erreur lors du téléchargement de l\'image :', error);
+  });
+
       
   });
 
