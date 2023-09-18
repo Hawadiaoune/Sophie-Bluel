@@ -68,19 +68,19 @@ recupererTravauxArchitecte();
 //* Modale connexion/deconnexion
 
 
-// Sélectionne l'élément du lien de connexion/logout
+// Sélectionner l'élément du lien de connexion/logout
 const loginLink = document.getElementById('loginLink');
 
-// Vérifie si un token d'authentification est présent dans le stockage local
+// Vérifier si un token d'authentification est présent dans le stockage local
 const token = localStorage.getItem('token');
 if (token) {
   // Si un token est présent, cela signifie que l'utilisateur est connecté
-  // Masque le lien de connexion et affichez le lien de déconnexion
+  // Masquer le lien de connexion et affichez le lien de déconnexion
   loginLink.textContent = 'Logout';
 }
 
 
-// Ajoutez un écouteur d'événement au lien de connexion/logout
+// Ajouter un écouteur d'événement au lien de connexion/logout
 loginLink.addEventListener('click', handleLoginLogout);
 
 
@@ -88,7 +88,7 @@ function handleLoginLogout() {
   if (token) {
     // Si un token est présent, cela signifie que l'utilisateur est connecté
 
-    // Supprime le token du stockage local
+    // Supprimer le token du stockage local
     localStorage.removeItem('token');
 
     // Redirige vers la page de login
@@ -128,7 +128,7 @@ loginLink.addEventListener('click', handleLoginLogout);
 
 
 
-//* Modale 1
+//* Modale 1 - affichage de la galerie
 
 document.addEventListener('DOMContentLoaded', function() {
   const btnModifier = document.getElementById('btnModifier');
@@ -149,7 +149,7 @@ overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.4)'; // Noir avec 40% d'opacit�
 overlay.style.zIndex = '1000'; //  l'overlay est au-dessus de tout le reste
 overlay.style.display = 'none'; // Initialement masqué
 
-// Ajoutez l'overlay au corps (body) du document
+// Ajouter l'overlay au corps (body) du document
 document.body.appendChild(overlay);
   
 
@@ -169,7 +169,7 @@ document.body.appendChild(overlay);
   // Ajouter un écouteur d'événement pour le clic sur le bouton "Modifier"
   btnModifier.addEventListener('click', ouvrirModal);
 
-// Ajoutez un gestionnaire d'événements pour le clic en dehors de la modale
+// Ajouter un gestionnaire d'événements pour le clic en dehors de la modale
 document.addEventListener('click', function (event) {
   if (event.target === modal) {
     fermerModal();
@@ -186,10 +186,10 @@ document.addEventListener('click', function (event) {
 
 
     // Si un token est présent, cela signifie que l'utilisateur est connecté
-    // Affiche la modale
+    // Afficher la modale
     modal.style.display = 'block';
     addPhotoModal.style.zIndex = '2000'; // Assurez-vous que la modale est au-dessus de l'overlay
-    // Affiche l'overlay lorsque la modale s'ouvre
+    // Afficher l'overlay lorsque la modale s'ouvre
     overlay.style.display = 'block';
     const travaux = document.querySelectorAll('.travail');
     travaux.forEach(travail => {
@@ -198,7 +198,7 @@ document.addEventListener('click', function (event) {
 
   } else {
     // Si aucun token n'est présent, cela signifie que l'utilisateur n'est pas connecté
-    // Redirige vers la page de login
+    // Rediriger vers la page de login
     window.location.href = './login.html';
     modal.style.display = 'none';
   }
@@ -244,7 +244,6 @@ const gallery = document.getElementById('gallery');
 
     travailElement.setAttribute('data-categoryId', travail.categoryId);
 
-    /*ajouterTravauxAGalerie(travaux);*/
 
     // Ajouter l'icône poubelle pour supprimer la photo
     const deleteIcon = document.createElement('i');
@@ -261,7 +260,6 @@ const gallery = document.getElementById('gallery');
 
 
     // Ajouter la div du travail à la modale
-
     gallery.appendChild(travailElement);
 
   });
@@ -290,8 +288,6 @@ async function deleteImage(imageId) {
       if (photoElement) {
         photoElement.remove();
       }
-      /*
-      recupererTravauxArchitecte();*/
     } else {
       console.error('La suppression de l\'image a échoué :', response.status, response.statusText);
     }
@@ -335,105 +331,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const saveImageButton = document.getElementById('saveImageButton');
 
 
-  
-
-  // Ajoute un écouteur d'événement pour le clic sur le bouton "Ajouter une photo"
- /* openAddPhotoModalButton.addEventListener('click', openAddPhotoModal);
-
-
-  // Fonction pour afficher la modale d'ajout de photo
-  function openAddPhotoModal() {
-
-    // Masquer la galerie photo
-    modalContent.style.display = 'none';
-
-    // Afficher la modale d'ajout de photo
-    addPhotoModal.style.display = 'block';
-
-      // Masquer le bouton "Ajouter une photo"
-  openAddPhotoModalButton.style.display = 'none';
-
-  deleteGalleryButton.style.display = 'none';
-
-  }
-
-
- // Fonction pour masquer la modale d'ajout de photo
- function closeAddPhotoModal() {
-  addPhotoModal.style.display = 'none';
-
-  // Réafficher la galerie photo
-  modalContent.style.display = 'block';
-
-}
-
-
-
-  // Écouter l'événement de clic sur le bouton de fermeture de la modale d'ajout de photo
-  closeButton.addEventListener('click', closeAddPhotoModal);
-
-
-  // Écouter l'événement de clic en dehors de la modale pour la fermer
-  window.addEventListener('click', function (event) {
-    if (event.target === modal) {
-      closeAddPhotoModal();
-    }
-
-  });
-
-  
-
-  // Récupérer les données du formulaire
-const imageInput = document.getElementById('imageInput');
-const titleInput = document.getElementById('imageTitle');
-
-
-const imageFile = imageInput.files[0];
-const title = titleInput.value;
-
-
-// Créer un objet FormData pour envoyer les données de formulaire (y compris l'image) via la requête fetch
-const formData = new FormData();
-formData.append('image', imageFile);
-formData.append('title', title);
-
-
-
-// Envoi de la requête POST vers l'API
-fetch('http://localhost:5678/api/works', {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer ' + token, // Inclure le jeton d'accès dans l'en-tête de la requête si nécessaire
-  },
-  body: formData,
-})
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Échec du téléchargement de l\'image sur le serveur.');
-    }
-    return response.json();
-  })
-
-
-  .then(nouvellePhoto => {
-    console.log('Nouvelle photo ajoutée :', nouvellePhoto);
-
-    // Rafraîchir la galerie avec les nouvelles données
-    recupererTravauxArchitecte();
-          // Rediriger vers la page d'accueil
-      window.location.href = './index.html';
-  })
-  .catch(error => {
-    console.error('Erreur lors du téléchargement de l\'image :', error);
-  });
-*/
-
-// ...
-
-// Ajoute un écouteur d'événement pour le clic sur le bouton "Ajouter une photo"
+// Ajouter un écouteur d'événement pour le clic sur le bouton "Ajouter une photo"
 openAddPhotoModalButton.addEventListener('click', openAddPhotoModal);
 
-// Ajoutez un gestionnaire d'événements pour le clic en dehors de la modale
+// Ajouter un gestionnaire d'événements pour le clic en dehors de la modale
 document.addEventListener('click', function (event) {
   if (event.target === addPhotoModal) {
     closeAddPhotoModal();
@@ -474,59 +375,6 @@ function openAddPhotoModal() {
   saveImageButton.addEventListener('click', function(event) {
     event.preventDefault(); // Empêche la soumission par défaut du formulaire
 
-/*
-    // Récupérer les données du formulaire
-    const imageInput = document.getElementById('imageInput');
-    if (!imageInput.files || imageInput.files.length === 0) {
-      alert("Veuillez sélectionner une image avant de valider.");
-      return;
-    }
-    const titleInput = document.getElementById('imageTitle');
-
-    const imageFile = imageInput.files[0];
-    console.log(imageInput.files)
-    const title = titleInput.value;
-    const imageCategorySelect = document.getElementById('imageCategory');
-
-    // Créer un objet FormData pour envoyer les données de formulaire (y compris l'image) via la requête fetch
-    const formData = new FormData();
-    formData.append('imageUrl', imageFile);
-    console.log(formData.get.imageFile)
-    formData.append('title', title);
-    formData.append('imageCategory', imageCategorySelect.value);
-
-    
-
-    // Envoi de la requête POST vers l'API
-    fetch('http://localhost:5678/api/works', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + token, // Inclure le jeton d'accès dans l'en-tête de la requête si nécessaire
-        'Content-Type': 'multipart/form-data',
-      },
-      body: {title: 'ess', categoryId: 1 },
-    })
-  
-      .then(response => {
-        console.log(response);
-        if (!response.ok) {
-        
-          throw new Error('Échec du téléchargement de l\'image sur le serveur.');
-        }
-        return response.json();
-      })
-      .then(nouvellePhoto => {
-        console.log('Nouvelle photo ajoutée :', nouvellePhoto);
-
-        // Rafraîchir la galerie avec les nouvelles données
-        recupererTravauxArchitecte();
-        
-        // Rediriger vers la page d'accueil
-        window.location.href = './index.html';
-      })
-      .catch(error => {
-        console.error('Erreur lors du téléchargement de l\'image :', error);
-      });*/
 
       // Récupérer les données du formulaire
 const imageInput = document.getElementById('imageInput');
@@ -540,17 +388,17 @@ const imageFile = imageInput.files[0];
 const title = titleInput.value;
 const imageCategorySelect = document.getElementById('imageCategory');
 
-// Créer un objet FormData pour envoyer les données de formulaire (y compris l'image) via la requête fetch
+// Créer un objet FormData pour envoyer les données de formulaire via la requête fetch
 const formData = new FormData();
-formData.append('image', imageFile); // Utilisez 'image' ici pour correspondre à la clé attendue dans le backend
+formData.append('image', imageFile); 
 formData.append('title', title);
-formData.append('category', imageCategorySelect.value); // Utilisez 'category' ici pour correspondre à la clé attendue dans le backend
+formData.append('category', imageCategorySelect.value); 
 
 // Envoi de la requête POST vers l'API
 fetch('http://localhost:5678/api/works', {
   method: 'POST',
   headers: {
-    'Authorization': 'Bearer ' + token, // Inclure le jeton d'accès dans l'en-tête de la requête si nécessaire
+    'Authorization': 'Bearer ' + token, // Inclure le jeton d'accès dans l'en-tête de la requête 
   },
   body: formData, // Utilisez formData comme corps de la requête
 })
