@@ -171,7 +171,7 @@ document.body.appendChild(overlay);
 
 // Ajouter un gestionnaire d'événements pour le clic en dehors de la modale
 document.addEventListener('click', function (event) {
-  if (event.target === modal) {
+  if (event.target === overlay) {
     fermerModal();
   }
 });
@@ -297,6 +297,7 @@ async function deleteImage(imageId) {
 }
 
 
+
 // Appel de la fonction pour récupérer les travaux via fetch + création de la variable contenant les nouveaux projets
 async function recupererTravauxArchitecte() {
   try {
@@ -336,7 +337,7 @@ openAddPhotoModalButton.addEventListener('click', openAddPhotoModal);
 
 // Ajouter un gestionnaire d'événements pour le clic en dehors de la modale
 document.addEventListener('click', function (event) {
-  if (event.target === addPhotoModal) {
+  if (event.target === overlay) {
     closeAddPhotoModal();
   }
 });
