@@ -3,7 +3,7 @@ function ajouterTravauxAGalerie(travaux) {
   const galerieArchitecte = document.getElementById('galerie-architecte'); // Sélectionnez l'élément de la galerie dans le DOM
 
 
-// création des ééléments HTML //
+// création des éléments HTML //
   travaux.forEach(travail => {
       const travailElement = document.createElement('figure');
       travailElement.classList.add('travail'); 
@@ -28,7 +28,7 @@ function filtrerTravauxParCategorie(categorie) {
   console.log(travaux);
 
   travaux.forEach(travail => {
-      const travailCategoryId = travail.getAttribute('data-categoryId');
+      const travailCategoryId = travail.getAttribute('data-categoryId'); // pour chaque travail, extraction de l'id
 
       if (categorie === 'tous' || travailCategoryId === categorie) {
           travail.style.display = 'block';
@@ -38,13 +38,14 @@ function filtrerTravauxParCategorie(categorie) {
   });
 }
 
+
 const boutonsCategories = document.querySelectorAll('#portfolio button');
 
 boutonsCategories.forEach(bouton => {
     bouton.addEventListener('click', function () {
         const categorie = this.getAttribute('data-categoryId');
         filtrerTravauxParCategorie(categorie);
-        console.log('bonjour')
+        console.log('ok')
       });
     });
 
@@ -75,7 +76,7 @@ const loginLink = document.getElementById('loginLink');
 const token = localStorage.getItem('token');
 if (token) {
   // Si un token est présent, cela signifie que l'utilisateur est connecté
-  // Masquer le lien de connexion et affichez le lien de déconnexion
+
   loginLink.textContent = 'Logout';
 }
 
@@ -188,7 +189,7 @@ document.addEventListener('click', function (event) {
     // Si un token est présent, cela signifie que l'utilisateur est connecté
     // Afficher la modale
     modal.style.display = 'block';
-    addPhotoModal.style.zIndex = '2000'; // Assurez-vous que la modale est au-dessus de l'overlay
+    addPhotoModal.style.zIndex = '2000'; // Assurer que la modale est au-dessus de l'overlay
     // Afficher l'overlay lorsque la modale s'ouvre
     overlay.style.display = 'block';
     const travaux = document.querySelectorAll('.travail');
@@ -210,9 +211,9 @@ document.addEventListener('click', function (event) {
 
   function fermerModal() {
     modal.style.display = 'none';
-      // Réinitialisez le z-index de la modale
+      // Réinitialiser le z-index de la modale
   addPhotoModal.style.zIndex = 'auto';
-  // Réaffichez l'overlay
+  // Réafficher l'overlay
   overlay.style.display = 'none';
   const travaux = document.querySelectorAll('.travail');
   travaux.forEach(travail => {
@@ -248,9 +249,9 @@ const gallery = document.getElementById('gallery');
     // Ajouter l'icône poubelle pour supprimer la photo
     const deleteIcon = document.createElement('i');
     deleteIcon.classList.add('fa-solid', 'fa-trash', 'deleteIcon');
-    deleteIcon.addEventListener('click', () => deleteImage(travail.id)); // Appel de la fonction deleteImage avec l'ID du travail
+    deleteIcon.addEventListener('click', (event) => deleteImage(event, travail.id)); // Appel de la fonction deleteImage avec l'ID du travail
     travailElement.appendChild(deleteIcon);
-    /*console.log(deleteIcon);*/
+
 
   // Ajouter le bouton editer
     const editText = document.createElement('span');
@@ -270,8 +271,9 @@ const gallery = document.getElementById('gallery');
 
 
 // Fonction pour supprimer une image via l'API
-async function deleteImage(imageId) {
+async function deleteImage(event, imageId) {
   try {
+    event.preventDefault();
     const response = await fetch(`http://localhost:5678/api/works/${imageId}`, {
       method: 'DELETE',
       headers: {
@@ -401,7 +403,7 @@ fetch('http://localhost:5678/api/works', {
   headers: {
     'Authorization': 'Bearer ' + token, // Inclure le jeton d'accès dans l'en-tête de la requête 
   },
-  body: formData, // Utilisez formData comme corps de la requête
+  body: formData, // Utiliser formData comme corps de la requête
 })
   .then(response => {
     console.log(response);
