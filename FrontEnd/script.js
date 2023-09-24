@@ -43,6 +43,11 @@ const boutonsCategories = document.querySelectorAll('#portfolio button');
 
 boutonsCategories.forEach(bouton => {
     bouton.addEventListener('click', function () {
+          // Supprimer la classe "active" de tous les boutons de catégorie
+    boutonsCategories.forEach(b => b.classList.remove('active'));
+
+    // Ajouter la classe "active" uniquement au bouton de catégorie cliqué
+    bouton.classList.add('active');
         const categorie = this.getAttribute('data-categoryId');
         filtrerTravauxParCategorie(categorie);
         console.log('ok')
@@ -272,8 +277,9 @@ const gallery = document.getElementById('gallery');
 
 // Fonction pour supprimer une image via l'API
 async function deleteImage(event, imageId) {
+  event.preventDefault();
+  
   try {
-    event.preventDefault();
     const response = await fetch(`http://localhost:5678/api/works/${imageId}`, {
       method: 'DELETE',
       headers: {
@@ -333,7 +339,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const openAddPhotoModalButton = document.getElementById('openAddPhotoModalButton');
   const saveImageButton = document.getElementById('saveImageButton');
 
-
+  const deleteGalleryButton = document.getElementById('deleteGalleryButton');
+  
 // Ajouter un écouteur d'événement pour le clic sur le bouton "Ajouter une photo"
 openAddPhotoModalButton.addEventListener('click', openAddPhotoModal);
 
@@ -364,7 +371,9 @@ function openAddPhotoModal() {
 
   // Réafficher la galerie photo
   modalContent.style.display = 'block';
-
+  // Réafficher les boutons "Ajouter une photo" et "Supprimer ma galerie"
+  openAddPhotoModalButton.style.display = 'block';
+  deleteGalleryButton.style.display = 'block';
 }
 
 
@@ -372,7 +381,19 @@ function openAddPhotoModal() {
   // Écouter l'événement de clic sur le bouton de fermeture de la modale d'ajout de photo
   closeButton.addEventListener('click', closeAddPhotoModal);
 
+  const saveButton = document.getElementById('saveImageButton');
+  const imageInput = document.getElementById('imageInput');
 
+  imageInput.addEventListener('change', function () {
+    if (imageInput.files.length > 0) {
+      saveButton.classList.remove('valider-gris');
+      saveButton.classList.add('valider-vert');
+    } else {
+      saveButton.classList.remove('valider-vert');
+      saveButton.classList.add('valider-gris');
+    }
+  });
+  
   
   // Ajouter un gestionnaire d'événements pour le clic sur le bouton "Valider"
   saveImageButton.addEventListener('click', function(event) {
@@ -396,6 +417,9 @@ const formData = new FormData();
 formData.append('image', imageFile); 
 formData.append('title', title);
 formData.append('category', imageCategorySelect.value); 
+
+
+
 
 // Envoi de la requête POST vers l'API
 fetch('http://localhost:5678/api/works', {
@@ -428,7 +452,76 @@ fetch('http://localhost:5678/api/works', {
       
   });
 
+/*  
 
+// Sélectionnez l'élément img pour l'aperçu
+const imagePreview = document.getElementById('imagePreview');
+
+// Ajoutez un gestionnaire d'événements pour le changement de sélection de fichier
+imageInput.addEventListener('change', function () {
+  const imageFile = imageInput.files[0];
+
+  if (imageFile) {
+    // Créez un objet FileReader
+    const reader = new FileReader();
+
+    // Ajoutez un gestionnaire d'événements pour la fin de la lecture
+    reader.onload = function (e) {
+      // Définissez la source de l'aperçu sur les données de l'image lue
+      imagePreview.src = e.target.result;
+
+      // Affichez l'aperçu
+      imagePreview.style.display = 'block';
+    };
+
+    // Lisez le contenu de l'image en tant que URL de données
+    reader.readAsDataURL(imageFile);
+  } else {
+    // Effacez l'aperçu si aucun fichier n'est sélectionné
+    imagePreview.src = '#';
+    imagePreview.style.display = 'none';
+  }
+});
+
+
+
+// ...
+/*
+// Envoi de la requête POST vers l'API
+fetch('http://localhost:5678/api/works', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ' + token, // Inclure le jeton d'accès dans l'en-tête de la requête 
+  },
+  body: formData, // Utiliser formData comme corps de la requête
+})
+  .then(response => {
+    console.log(response);
+    if (!response.ok) {
+      throw new Error('Échec du téléchargement de l\'image sur le serveur.');
+    }
+    return response.json();
+  })
+  .then(nouvellePhoto => {
+    console.log('Nouvelle photo ajoutée :', nouvellePhoto);
+
+    // Rafraîchir la galerie avec les nouvelles données
+    recupererTravauxArchitecte();
+    
+    // Rediriger vers la page d'accueil
+    window.location.href = './index.html';
+  })
+  .catch(error => {
+    console.error('Erreur lors du téléchargement de l\'image :', error);
+  });
+
+// ...
+Avec cette modification, lorsque l'utilisateur sélectionne une image à ajouter, un aperçu de cette image sera affiché dans la modal d'ajout de photo avant la soumission du formulaire. Si aucun fichier n'est sélectionné, l'aperçu sera masqué.
+
+
+
+
+ */
 
 });
 

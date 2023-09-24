@@ -201,15 +201,18 @@ height: 40px;
 font-size: 1.2em;
 font-family: 'Syne';
 font-weight: 700;
-color: white;
-background-color: #1D6154;
+color:#1D6154; 
+background-color: white;
 width: 180px;
 text-align: center;
 border-radius: 60px;
 border: 1px solid #1D6154
 }
 
-
+.category-button.active{
+background: #1D6154;
+color: white;
+}
 
 .bouton1 {
 height: 40px;
@@ -224,6 +227,12 @@ border-radius: 60px;
 border: 1px solid #1D6154
 }
 
+/*
+.bouton1:active, .bouton:active{
+background: #1D6154;
+  color: white;
+}
+*/
 #portfolio.hide-category-buttons .category-button {
 display: none;
 width: 585px;
@@ -447,10 +456,15 @@ width: 420px;
 
 .textajout, .categajout{
 width: 420px;
-
 }
-
-
+/*
+#imagePreview {
+max-width: 100%;
+display: none;
+width: 361px;
+position: absolute;
+height: 169px;
+}*/
 
 #titremodal h4{
 font-family: Work Sans;
@@ -500,6 +514,19 @@ flex-direction: column;
 #saveImageButton{
 height: 36px;
 }
+
+/* Style initial en gris */
+.valider-gris {
+  background-color: gray;
+  color: white;
+}
+
+/* Style en vert lorsqu'un fichier est sélectionné */
+.valider-vert {
+  background-color: green;
+  color: white;
+}
+
 
 .fa-image{
 font-size: 76px;
@@ -580,3 +607,5 @@ text-decoration: underline;
 }
 
 
+
+  

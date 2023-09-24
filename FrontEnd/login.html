@@ -70,6 +70,7 @@ function handleLoginFormSubmit(event) {
     showSuccessMessage(successMessage);
     console.log('connexion reussie')
 
+   
 
     // Effectuer la requête Fetch pour l'authentification
     const loginData = {
@@ -109,13 +110,15 @@ function handleLoginFormSubmit(event) {
         // Gérer les erreurs de la requête
         console.error('Erreur lors de la requête de connexion:', error);
       });
-  } 
+  }     else{
+    const errorMessage = "Erreur dans l'identifiant ou le mot de passe";
+  showErrorMessage(errorMessage);
+    }
 }
 
 
-
-// Fonction pour afficher un message d'erreur
-function showErrorMessage(message) {
+ // Fonction pour afficher un message d'erreur
+ function showErrorMessage(message) {
   loginMessage.textContent = message;
   loginMessage.style.color = 'red';
 }
@@ -126,6 +129,7 @@ function showSuccessMessage(message) {
   loginMessage.style.color = 'green';
 
 }
+
 
 // Écouter l'événement de soumission du formulaire
 loginForm.addEventListener('submit', handleLoginFormSubmit);
