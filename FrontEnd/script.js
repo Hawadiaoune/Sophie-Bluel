@@ -296,6 +296,8 @@ async function deleteImage(event, imageId) {
       if (photoElement) {
         photoElement.remove();
       }
+           // Mettre à jour la liste des travaux après la suppression réussie
+            recupererTravauxArchitecte();
     } else {
       console.error('La suppression de l\'image a échoué :', response.status, response.statusText);
     }
@@ -306,13 +308,16 @@ async function deleteImage(event, imageId) {
 
 
 
+
 // Appel de la fonction pour récupérer les travaux via fetch + création de la variable contenant les nouveaux projets
 async function recupererTravauxArchitecte() {
   try {
     const response = await fetch('http://localhost:5678/api/works');
     const travaux = await response.json();
-    generateModalContent(travaux); // Appel de la fonction pour générer le contenu de la modale avec les travaux
     ajouterTravauxAGalerie(travaux); // Traite les données récupérées et les ajoute à la galerie
+    // Nettoyer la galerie existante et ajouter les travaux
+    gallery.innerHTML = ''; // Supprimer tous les éléments enfants de la galerie
+    generateModalContent(travaux); // Ajouter les travaux à la galerie
   } catch (error) {
     console.error('Erreur lors de la récupération des travaux :', error);
   }
@@ -380,19 +385,6 @@ function openAddPhotoModal() {
 
   // Écouter l'événement de clic sur le bouton de fermeture de la modale d'ajout de photo
   closeButton.addEventListener('click', closeAddPhotoModal);
-
-  const saveButton = document.getElementById('saveImageButton');
-  const imageInput = document.getElementById('imageInput');
-
-  imageInput.addEventListener('change', function () {
-    if (imageInput.files.length > 0) {
-      saveButton.classList.remove('valider-gris');
-      saveButton.classList.add('valider-vert');
-    } else {
-      saveButton.classList.remove('valider-vert');
-      saveButton.classList.add('valider-gris');
-    }
-  });
   
   
   // Ajouter un gestionnaire d'événements pour le clic sur le bouton "Valider"
@@ -419,7 +411,7 @@ formData.append('title', title);
 formData.append('category', imageCategorySelect.value); 
 
 
-
+const gallery = document.getElementById('gallery');
 
 // Envoi de la requête POST vers l'API
 fetch('http://localhost:5678/api/works', {
@@ -438,12 +430,11 @@ fetch('http://localhost:5678/api/works', {
   })
   .then(nouvellePhoto => {
     console.log('Nouvelle photo ajoutée :', nouvellePhoto);
+    closeAddPhotoModal();
 
-    // Rafraîchir la galerie avec les nouvelles données
-    recupererTravauxArchitecte();
-    
-    // Rediriger vers la page d'accueil
-    window.location.href = './index.html';
+ // rafraichir la galerie 
+  recupererTravauxArchitecte();
+
   })
   .catch(error => {
     console.error('Erreur lors du téléchargement de l\'image :', error);
@@ -452,6 +443,57 @@ fetch('http://localhost:5678/api/works', {
       
   });
 
+// Fonction pour nettoyer la galerie existante et ajouter les nouveaux travaux
+function updateGallery(travaux) {
+  const gallery = document.getElementById('gallery');
+  
+  // Supprimer tous les éléments enfants de la galerie
+  gallery.innerHTML = '';
+  
+  // Ajouter les travaux à la galerie
+  travaux.forEach(travail => {
+    const travailElement = document.createElement('div');
+    travailElement.classList.add('travail-modal');
+    // ...
+    const imageElement = document.createElement('img');
+    imageElement.src = travail.imageUrl;
+    travailElement.appendChild(imageElement);
+    travailElement.setAttribute('data-categoryId', travail.categoryId);
+
+
+    // Ajouter l'icône poubelle pour supprimer la photo
+    const deleteIcon = document.createElement('i');
+    deleteIcon.classList.add('fa-solid', 'fa-trash', 'deleteIcon');
+    deleteIcon.addEventListener('click', (event) => deleteImage(event, travail.id)); // Appel de la fonction deleteImage avec l'ID du travail
+    travailElement.appendChild(deleteIcon);
+
+
+  // Ajouter le bouton editer
+    const editText = document.createElement('span');
+    editText.classList.add('edit-text');
+    editText.textContent = 'éditer';
+    travailElement.appendChild(editText);
+
+
+    // Ajouter la div du travail à la modale
+    gallery.appendChild(travailElement);
+  });
+}
+
+// Fonction pour récupérer les travaux via fetch + mise à jour de la galerie
+async function recupererTravauxArchitecte() {
+  try {
+    const response = await fetch('http://localhost:5678/api/works');
+    const travaux = await response.json();
+    
+    // Mettre à jour la galerie avec les nouveaux travaux
+    updateGallery(travaux);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des travaux :', error);
+  }
+} 
+
+updateGallery();
 /*  
 
 // Sélectionnez l'élément img pour l'aperçu
