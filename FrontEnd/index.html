@@ -42,52 +42,56 @@
 
 
 
-  <div id="modal" class="modal hide">
-	<div id="modal-content">
-	  <span class="close">&times;</span>
-  
-	  <h2>Galerie photo</h2>
-	  <div id="gallery">
-	  </div>
-	
-	</div>
-	
-	<div id="addPhotoModal" class="add-photo-modal">
-	  <div id="modal-ajout">
-<button id="backToGalleryButton"></button>
-		<span id="closeAddPhotoModalButton">&times;</span>
-		<h2>Ajout photo</h2>
-		<div class="formulaire"> 
-		<section id="ajoutphoto">
-		  <form id="addImageForm" >
-			<span class="iconeImage"><i class="fa-solid fa-image"></i></span>
-			<input class="ajout"  type="file" name="image" id="imageInput" accept="image/*"> 
-			<h4 class="texteForm">jpg, png, 4 Mo max</h4>
-		 
-		</section>
-		<section id="titremodal">
-		  <h4>Titre</h4>
-		  <input class="textajout" type="text" name="title" id="imageTitle" />
-		</section>
-		<section id="categ">
-		  <h4>Catégorie</h4>
-		  <select class="categajout" name="category" id="imageCategory">
-			<!-- Les options pour les catégories seront générées dynamiquement par JavaScript -->
-		  </select>
-		</section>
-		<button id="saveImageButton" type="submit" class="valider-gris" >Valider</button>
-	</form>
-	  </div>
-	</div>
-	</div>
-	<div class="option"> 
-	<button id="openAddPhotoModalButton">Ajouter une photo</button>
-	<h3 id="deleteGalleryButton">Supprimer la galerie</h3>
-</div>
-	</div>
+ 
   					
 
 	</section>
+
+	<div id="modal" class="modal hide">
+		<div id="modal-content">
+		  <span class="close">&times;</span>
+	  
+		  <h2>Galerie photo</h2>
+		  <div id="gallery">
+		  </div>
+		
+		</div>
+		
+		<div id="addPhotoModal" class="add-photo-modal">
+		  <div id="modal-ajout">
+	<button id="backToGalleryButton"></button>
+			<span id="closeAddPhotoModalButton">&times;</span>
+			<h2>Ajout photo</h2>
+			<div class="formulaire"> 
+			<section id="ajoutphoto">
+			  <form id="addImageForm" >
+				<span class="iconeImage"><i class="fa-solid fa-image"></i></span>
+				<input class="ajout"  type="file" name="image" id="imageInput" accept="image/*"> 
+			<img src="#" alt=" " id="imagePreview" >
+				<h4 class="texteForm">jpg, png, 4 Mo max</h4>
+			 
+			</section>
+			<section id="titremodal">
+			  <h4>Titre</h4>
+			  <input class="textajout" type="text" name="title" id="imageTitle" />
+			</section>
+			<section id="categ">
+			  <h4>Catégorie</h4>
+			  <select class="categajout" name="category" id="imageCategory">
+				<!-- Les options pour les catégories seront générées dynamiquement par JavaScript -->
+			  </select>
+			</section>
+			<button id="saveImageButton"  type="submit" class="valider-gris valider-vert" >Valider</button>
+		</form>
+		  </div>
+		</div>
+		</div>
+		<div class="option"> 
+		<button id="openAddPhotoModalButton">Ajouter une photo</button>
+		<h3 id="deleteGalleryButton">Supprimer la galerie</h3>
+	</div>
+		</div>
+
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
 		<div class="modification"> 

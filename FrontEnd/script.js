@@ -205,7 +205,7 @@ document.addEventListener('click', function (event) {
   } else {
     // Si aucun token n'est présent, cela signifie que l'utilisateur n'est pas connecté
     // Rediriger vers la page de login
-    window.location.href = './login.html';
+
     modal.style.display = 'none';
   }
  
@@ -294,10 +294,9 @@ async function deleteImage(event, imageId) {
       const photoElement = document.querySelector(`img[data-id="${imageId}"]`); 
       console.log(photoElement);
       if (photoElement) {
-        photoElement.remove();
+        photoElement.parentNode.remove();
       }
-           // Mettre à jour la liste des travaux après la suppression réussie
-            recupererTravauxArchitecte();
+      recupererTravauxArchitecte();
     } else {
       console.error('La suppression de l\'image a échoué :', response.status, response.statusText);
     }
@@ -311,10 +310,11 @@ async function deleteImage(event, imageId) {
 
 // Appel de la fonction pour récupérer les travaux via fetch + création de la variable contenant les nouveaux projets
 async function recupererTravauxArchitecte() {
+  
   try {
     const response = await fetch('http://localhost:5678/api/works');
     const travaux = await response.json();
-    ajouterTravauxAGalerie(travaux); // Traite les données récupérées et les ajoute à la galerie
+   ajouterTravauxAGalerie(travaux); // Traite les données récupérées et les ajoute à la galerie
     // Nettoyer la galerie existante et ajouter les travaux
     gallery.innerHTML = ''; // Supprimer tous les éléments enfants de la galerie
     generateModalContent(travaux); // Ajouter les travaux à la galerie
@@ -322,6 +322,7 @@ async function recupererTravauxArchitecte() {
     console.error('Erreur lors de la récupération des travaux :', error);
   }
 } 
+
 
 // Écouter l'événement de clic sur le bouton "Modifier" pour ouvrir la modale
 const modifierButton = document.getElementById('btnModifier');
@@ -381,6 +382,40 @@ function openAddPhotoModal() {
   deleteGalleryButton.style.display = 'block';
 }
 
+  // Sélectionner l'élément input pour l'image
+  const imageInput = document.getElementById('imageInput');
+  const saveButton = document.getElementById('saveImageButton');
+        
+  // Sélectionner l'élément img pour l'aperçu
+  const imagePreview = document.getElementById('imagePreview');
+  
+  // Ajouter un gestionnaire d'événements pour le changement de sélection de fichier
+  imageInput.addEventListener('change', function () {
+      const imageFile = imageInput.files[0];
+  
+      if (imageFile) {
+          // Créer un objet FileReader
+          const reader = new FileReader();
+  
+          // Ajouter un gestionnaire d'événements pour la fin de la lecture
+          reader.onload = function (e) {
+              // Définisser la source de l'aperçu sur les données de l'image lue
+              imagePreview.src = e.target.result;
+  
+              // Afficher l'aperçu
+              imagePreview.style.display = 'block';
+              saveButton.style.backgroundColor = '#1D6154';
+          };
+  
+          // Lire le contenu de l'image en tant que URL de données
+          reader.readAsDataURL(imageFile);
+      } else {
+          // Effacer l'aperçu si aucun fichier n'est sélectionné
+          imagePreview.src = '#';
+          imagePreview.style.display = 'none';
+      }
+  });
+
 
 
   // Écouter l'événement de clic sur le bouton de fermeture de la modale d'ajout de photo
@@ -392,8 +427,9 @@ function openAddPhotoModal() {
     event.preventDefault(); // Empêche la soumission par défaut du formulaire
 
 
+ 
       // Récupérer les données du formulaire
-const imageInput = document.getElementById('imageInput');
+
 if (!imageInput.files || imageInput.files.length === 0) {
   alert("Veuillez sélectionner une image avant de valider.");
   return;
@@ -431,9 +467,9 @@ fetch('http://localhost:5678/api/works', {
   .then(nouvellePhoto => {
     console.log('Nouvelle photo ajoutée :', nouvellePhoto);
     closeAddPhotoModal();
-
+/*
  // rafraichir la galerie 
-  recupererTravauxArchitecte();
+  recupererTravauxArchitecte();*/
 
   })
   .catch(error => {
@@ -442,6 +478,9 @@ fetch('http://localhost:5678/api/works', {
 
       
   });
+
+
+
 
 // Fonction pour nettoyer la galerie existante et ajouter les nouveaux travaux
 function updateGallery(travaux) {
@@ -454,7 +493,7 @@ function updateGallery(travaux) {
   travaux.forEach(travail => {
     const travailElement = document.createElement('div');
     travailElement.classList.add('travail-modal');
-    // ...
+    // 
     const imageElement = document.createElement('img');
     imageElement.src = travail.imageUrl;
     travailElement.appendChild(imageElement);
@@ -494,76 +533,8 @@ async function recupererTravauxArchitecte() {
 } 
 
 updateGallery();
-/*  
-
-// Sélectionnez l'élément img pour l'aperçu
-const imagePreview = document.getElementById('imagePreview');
-
-// Ajoutez un gestionnaire d'événements pour le changement de sélection de fichier
-imageInput.addEventListener('change', function () {
-  const imageFile = imageInput.files[0];
-
-  if (imageFile) {
-    // Créez un objet FileReader
-    const reader = new FileReader();
-
-    // Ajoutez un gestionnaire d'événements pour la fin de la lecture
-    reader.onload = function (e) {
-      // Définissez la source de l'aperçu sur les données de l'image lue
-      imagePreview.src = e.target.result;
-
-      // Affichez l'aperçu
-      imagePreview.style.display = 'block';
-    };
-
-    // Lisez le contenu de l'image en tant que URL de données
-    reader.readAsDataURL(imageFile);
-  } else {
-    // Effacez l'aperçu si aucun fichier n'est sélectionné
-    imagePreview.src = '#';
-    imagePreview.style.display = 'none';
-  }
-});
 
 
-
-// ...
-/*
-// Envoi de la requête POST vers l'API
-fetch('http://localhost:5678/api/works', {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer ' + token, // Inclure le jeton d'accès dans l'en-tête de la requête 
-  },
-  body: formData, // Utiliser formData comme corps de la requête
-})
-  .then(response => {
-    console.log(response);
-    if (!response.ok) {
-      throw new Error('Échec du téléchargement de l\'image sur le serveur.');
-    }
-    return response.json();
-  })
-  .then(nouvellePhoto => {
-    console.log('Nouvelle photo ajoutée :', nouvellePhoto);
-
-    // Rafraîchir la galerie avec les nouvelles données
-    recupererTravauxArchitecte();
-    
-    // Rediriger vers la page d'accueil
-    window.location.href = './index.html';
-  })
-  .catch(error => {
-    console.error('Erreur lors du téléchargement de l\'image :', error);
-  });
-
-// ...
-Avec cette modification, lorsque l'utilisateur sélectionne une image à ajouter, un aperçu de cette image sera affiché dans la modal d'ajout de photo avant la soumission du formulaire. Si aucun fichier n'est sélectionné, l'aperçu sera masqué.
-
-
-
-
- */
 
 });
 
