@@ -467,9 +467,10 @@ fetch('http://localhost:5678/api/works', {
   .then(nouvellePhoto => {
     console.log('Nouvelle photo ajoutée :', nouvellePhoto);
     closeAddPhotoModal();
-/*
+
+
  // rafraichir la galerie 
-  recupererTravauxArchitecte();*/
+  recupererTravauxArchitecte();
 
   })
   .catch(error => {
