@@ -13,6 +13,7 @@
 	<script src="./script.js" defer></script>
 </head>
 <body>
+
     <header>
         <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
         <nav>
@@ -58,7 +59,57 @@ const loginMessage = document.getElementById('loginMessage');
 // Fonction pour gérer la soumission du formulaire
 function handleLoginFormSubmit(event) {
   event.preventDefault();
+// Sélectionner le formulaire de connexion
+const loginForm = document.getElementById('loginForm');
 
+// Écouter l'événement de soumission du formulaire de connexion
+loginForm.addEventListener('submit', async (event) => {
+  event.preventDefault(); // Empêcher la soumission par défaut du formulaire
+
+  // Récupérer les valeurs de l'email et du mot de passe depuis le formulaire
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  try {
+    // Effectuer une requête POST vers l'endpoint d'authentification de votre API
+    const response = await fetch('http://localhost:5678/api/users/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }), // Envoyer les données au format JSON
+    });
+
+    if (response.ok) {
+      // Authentification réussie, obtenir le token depuis la réponse
+      const data = await response.json();
+      const token = data.token;
+
+      // Enregistrer le token dans le stockage local pour les futures requêtes
+      localStorage.setItem('token', token);
+
+      // Afficher le message de réussite
+  const successMessage = "Connexion réussie ! Bienvenue, " + email + " !";
+  showSuccessMessage(successMessage);
+
+      // Rediriger vers la page principale ou effectuer d'autres actions nécessaires
+      window.location.href = './index.html';
+    } else if (response.status === 401) {
+      // Identifiants incorrects, afficher un message d'erreur
+      console.error('Identifiants incorrects');
+      const errorMessage = "Erreur dans l'identifiant ou le mot de passe";
+  showErrorMessage(errorMessage);
+      // Vous pouvez afficher un message d'erreur à l'utilisateur ici
+    } else {
+      // Gérer d'autres erreurs ici
+      console.error('Erreur lors de la connexion :', response.status, response.statusText);
+    }
+  } catch (error) {
+    console.error('Erreur lors de la connexion :', error);
+  }
+});
+
+  /*
   // Récupérer les valeurs des champs du formulaire
   const email = emailInput.value;
   const password = passwordInput.value;
@@ -114,6 +165,7 @@ function handleLoginFormSubmit(event) {
     const errorMessage = "Erreur dans l'identifiant ou le mot de passe";
   showErrorMessage(errorMessage);
     }
+    */
 }
 
 

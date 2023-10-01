@@ -99,6 +99,7 @@ function handleLoginLogout() {
 
     // Redirige vers la page de login
     window.location.href = './index.html';
+
   } else {
     // Si aucun token n'est présent, cela signifie que l'utilisateur n'est pas connecté
     // Redirige vers la page de login
@@ -129,9 +130,32 @@ function updateLoginButton() {
 window.addEventListener('load', updateLoginButton);
 
 
+
 // Écouter l'événement de clic sur le bouton de connexion/logout
 loginLink.addEventListener('click', handleLoginLogout);
 
+// Sélectionnez le bandeau
+const topBar = document.getElementById('topBar');
+
+// Fonction pour afficher ou masquer le bandeau en fonction de la connexion
+function updateTopBar() {
+  const token = localStorage.getItem('token'); // Récupérer le token
+  if (token) {
+    // Si un token est présent, cela signifie que l'utilisateur est connecté
+    // Afficher le bandeau
+    topBar.style.display = 'flex';
+  } else {
+    // Si aucun token n'est présent, cela signifie que l'utilisateur n'est pas connecté
+    // Masquer le bandeau
+    topBar.style.display = 'none';
+  }
+}
+
+// Appeler la fonction pour mettre à jour le bandeau au chargement de la page
+window.addEventListener('load', updateTopBar);
+
+// Appeler la fonction pour mettre à jour le bandeau lorsque l'utilisateur se connecte ou se déconnecte
+updateLoginButton();
 
 
 //* Modale 1 - affichage de la galerie
@@ -142,6 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const closeBtn = document.querySelector('.close');
   const boutonsCategories = document.querySelectorAll('#portfolio button');
   const travaux = document.querySelectorAll('.travail');
+/*backToGalleryButton*/
 
 // Créer l'overlay
 const overlay = document.createElement('div');
@@ -197,6 +222,7 @@ document.addEventListener('click', function (event) {
     addPhotoModal.style.zIndex = '2000'; // Assurer que la modale est au-dessus de l'overlay
     // Afficher l'overlay lorsque la modale s'ouvre
     overlay.style.display = 'block';
+    
     const travaux = document.querySelectorAll('.travail');
     travaux.forEach(travail => {
       travail.style.display = 'block';
@@ -231,7 +257,6 @@ document.addEventListener('click', function (event) {
 
 
 
-
 // Fonction pour générer le contenu de la modale avec la galerie des travaux
 function generateModalContent(travaux) {
 
@@ -254,8 +279,9 @@ const gallery = document.getElementById('gallery');
     // Ajouter l'icône poubelle pour supprimer la photo
     const deleteIcon = document.createElement('i');
     deleteIcon.classList.add('fa-solid', 'fa-trash', 'deleteIcon');
-    deleteIcon.addEventListener('click', (event) => deleteImage(event, travail.id)); // Appel de la fonction deleteImage avec l'ID du travail
+    deleteIcon.addEventListener('click',  (event) => deleteImage(event, travail.id)); // Appel de la fonction deleteImage avec l'ID du travail
     travailElement.appendChild(deleteIcon);
+
 
 
   // Ajouter le bouton editer
@@ -273,6 +299,21 @@ const gallery = document.getElementById('gallery');
 
 
 
+
+// Appel de la fonction pour récupérer les travaux via fetch + création de la variable contenant les nouveaux projets
+async function recupererTravauxArchitecte() {
+  
+  try {
+    const response = await fetch('http://localhost:5678/api/works');
+    const travaux = await response.json();
+   ajouterTravauxAGalerie(travaux); // Traite les données récupérées et les ajoute à la galerie
+    // Nettoyer la galerie existante et ajouter les travaux
+    gallery.innerHTML = ''; // Supprimer tous les éléments enfants de la galerie
+    generateModalContent(travaux); // Ajouter les travaux à la galerie
+  } catch (error) {
+    console.error('Erreur lors de la récupération des travaux :', error);
+  }
+} 
 
 
 // Fonction pour supprimer une image via l'API
@@ -295,7 +336,9 @@ async function deleteImage(event, imageId) {
       console.log(photoElement);
       if (photoElement) {
         photoElement.parentNode.remove();
+        
       }
+
       recupererTravauxArchitecte();
     } else {
       console.error('La suppression de l\'image a échoué :', response.status, response.statusText);
@@ -307,21 +350,6 @@ async function deleteImage(event, imageId) {
 
 
 
-
-// Appel de la fonction pour récupérer les travaux via fetch + création de la variable contenant les nouveaux projets
-async function recupererTravauxArchitecte() {
-  
-  try {
-    const response = await fetch('http://localhost:5678/api/works');
-    const travaux = await response.json();
-   ajouterTravauxAGalerie(travaux); // Traite les données récupérées et les ajoute à la galerie
-    // Nettoyer la galerie existante et ajouter les travaux
-    gallery.innerHTML = ''; // Supprimer tous les éléments enfants de la galerie
-    generateModalContent(travaux); // Ajouter les travaux à la galerie
-  } catch (error) {
-    console.error('Erreur lors de la récupération des travaux :', error);
-  }
-} 
 
 
 // Écouter l'événement de clic sur le bouton "Modifier" pour ouvrir la modale
@@ -335,6 +363,28 @@ modifierButton.addEventListener('click', () => {
 
 //* Deuxieme modale ajout photo
 
+
+///** Sélectionner l'élément du bouton "Retour à la galerie"
+const backToGalleryButton = document.getElementById('backToGalleryButton');
+
+// Sélectionner la modale d'ajout de photo
+const addPhotoModal = document.getElementById('addPhotoModal');
+
+// Sélectionner la galerie photo
+const modalContent = document.getElementById('modal-content');
+
+// Ajouter un gestionnaire d'événements au clic sur le bouton "Retour à la galerie"
+backToGalleryButton.addEventListener('click', function () {
+  // Masquer la modale d'ajout de photo
+  addPhotoModal.style.display = 'none';
+
+  // Réafficher la galerie photo
+  modalContent.style.display = 'block';
+    // Réafficher les boutons "Ajouter une photo" et "Supprimer ma galerie"
+    openAddPhotoModalButton.style.display = 'block';
+    deleteGalleryButton.style.display = 'block';
+});
+ 
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -494,7 +544,7 @@ function updateGallery(travaux) {
   travaux.forEach(travail => {
     const travailElement = document.createElement('div');
     travailElement.classList.add('travail-modal');
-    // 
+    
     const imageElement = document.createElement('img');
     imageElement.src = travail.imageUrl;
     travailElement.appendChild(imageElement);
@@ -520,6 +570,7 @@ function updateGallery(travaux) {
   });
 }
 
+/*
 // Fonction pour récupérer les travaux via fetch + mise à jour de la galerie
 async function recupererTravauxArchitecte() {
   try {
@@ -534,6 +585,27 @@ async function recupererTravauxArchitecte() {
 } 
 
 updateGallery();
+*/
+
+
+// Fonction pour récupérer les travaux via fetch + mise à jour de la galerie principale
+async function recupererTravauxArchitecte() {
+  try {
+    const response = await fetch('http://localhost:5678/api/works');
+    const travaux = await response.json();
+
+    // Mettre à jour la galerie avec les nouveaux travaux
+    updateGallery(travaux);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des travaux :', error);
+  }
+}
+
+// Écouter l'événement DOMContentLoaded pour charger la galerie initiale
+document.addEventListener('DOMContentLoaded', function () {
+
+  recupererTravauxArchitecte();
+});
 
 
 

@@ -377,7 +377,7 @@ top: 105px;
 }
 
 #backToGalleryButton::before {
-    content: "\2190"; /* Code Unicode pour une flèche gauche */
+content: "\2190"; /* Code Unicode pour une flèche gauche */
 }
 
 
@@ -407,6 +407,7 @@ height: 36px;
 top: 1267px;
 left: 600px;
 border-radius: 60px;
+
 }
 
 #deleteGalleryButton{
@@ -592,6 +593,46 @@ text-align: left;
 text-decoration: underline;
 
 }
+
+
+/* Styles pour le bandeau en haut */
+.top-bar {
+background-color: #000;
+color: #fff; 
+display: none; 
+max-width: 1140px;
+margin: auto;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+gap: 30px;
+}
+
+
+.boutonmodifier{
+height: 26px;
+font-family: 'Syne';
+font-weight: 200;
+background-color: white;
+width: auto;
+text-align: center;
+border-radius: 60px;
+margin: 9px;
+}
+
+.icon {
+font-size: 14px; 
+padding-bottom: 3px;
+}
+
+.icon span{
+font-size: 10px;
+}
+
+.iconmodifier{
+right: 0px;
+}
+
 
 
 
