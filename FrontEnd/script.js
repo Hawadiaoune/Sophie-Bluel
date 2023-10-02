@@ -279,7 +279,9 @@ const gallery = document.getElementById('gallery');
     // Ajouter l'icône poubelle pour supprimer la photo
     const deleteIcon = document.createElement('i');
     deleteIcon.classList.add('fa-solid', 'fa-trash', 'deleteIcon');
-    deleteIcon.addEventListener('click',  (event) => deleteImage(event, travail.id)); // Appel de la fonction deleteImage avec l'ID du travail
+    deleteIcon.addEventListener('click',  (event) => deleteImage(event, travail.id));
+     // Appel de la fonction deleteImage avec l'ID du travail
+
     travailElement.appendChild(deleteIcon);
 
 
@@ -308,7 +310,7 @@ async function recupererTravauxArchitecte() {
     const travaux = await response.json();
    ajouterTravauxAGalerie(travaux); // Traite les données récupérées et les ajoute à la galerie
     // Nettoyer la galerie existante et ajouter les travaux
-    gallery.innerHTML = ''; // Supprimer tous les éléments enfants de la galerie
+   
     generateModalContent(travaux); // Ajouter les travaux à la galerie
   } catch (error) {
     console.error('Erreur lors de la récupération des travaux :', error);
@@ -335,17 +337,24 @@ async function deleteImage(event, imageId) {
       const photoElement = document.querySelector(`img[data-id="${imageId}"]`); 
       console.log(photoElement);
       if (photoElement) {
-        photoElement.parentNode.remove();
+        photoElement.parentElement.remove();
         
       }
+      const gallery = document.getElementById('gallery');
+      gallery.innerHTML = '';
+      const galerieArchitecte = document.getElementById('galerie-architecte');
+      galerieArchitecte.innerHTML = ''; // Supprimer tous les éléments enfants de la galerie
+      
 
       recupererTravauxArchitecte();
+
     } else {
       console.error('La suppression de l\'image a échoué :', response.status, response.statusText);
     }
   } catch (error) {
     console.error('Erreur lors de la suppression de l\'image :', error);
   }
+
 }
 
 
@@ -518,7 +527,10 @@ fetch('http://localhost:5678/api/works', {
     console.log('Nouvelle photo ajoutée :', nouvellePhoto);
     closeAddPhotoModal();
 
-
+    const gallery = document.getElementById('gallery');
+    gallery.innerHTML = '';
+    const galerieArchitecte = document.getElementById('galerie-architecte');
+    galerieArchitecte.innerHTML = ''; // Supprimer tous les éléments enfants de la galerie
  // rafraichir la galerie 
   recupererTravauxArchitecte();
 
@@ -570,42 +582,22 @@ function updateGallery(travaux) {
   });
 }
 
-/*
-// Fonction pour récupérer les travaux via fetch + mise à jour de la galerie
+// Appel de la fonction pour récupérer les travaux via fetch + création de la variable contenant les nouveaux projets
 async function recupererTravauxArchitecte() {
+  
   try {
     const response = await fetch('http://localhost:5678/api/works');
     const travaux = await response.json();
-    
-    // Mettre à jour la galerie avec les nouveaux travaux
-    updateGallery(travaux);
+   ajouterTravauxAGalerie(travaux); // Traite les données récupérées et les ajoute à la galerie
+    // Nettoyer la galerie existante et ajouter les travaux
+
+    generateModalContent(travaux); // Ajouter les travaux à la galerie
   } catch (error) {
     console.error('Erreur lors de la récupération des travaux :', error);
   }
 } 
 
 updateGallery();
-*/
-
-
-// Fonction pour récupérer les travaux via fetch + mise à jour de la galerie principale
-async function recupererTravauxArchitecte() {
-  try {
-    const response = await fetch('http://localhost:5678/api/works');
-    const travaux = await response.json();
-
-    // Mettre à jour la galerie avec les nouveaux travaux
-    updateGallery(travaux);
-  } catch (error) {
-    console.error('Erreur lors de la récupération des travaux :', error);
-  }
-}
-
-// Écouter l'événement DOMContentLoaded pour charger la galerie initiale
-document.addEventListener('DOMContentLoaded', function () {
-
-  recupererTravauxArchitecte();
-});
 
 
 

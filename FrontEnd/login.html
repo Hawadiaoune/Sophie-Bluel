@@ -109,63 +109,7 @@ loginForm.addEventListener('submit', async (event) => {
   }
 });
 
-  /*
-  // Récupérer les valeurs des champs du formulaire
-  const email = emailInput.value;
-  const password = passwordInput.value;
-
-  // Vérifier les identifiants
-  if (email === 'sophie.bluel@test.tld' && password === 'S0phie') {
-    // Authentification réussie
-    const successMessage = "Connexion réussie ! Bienvenue, " + email + " !";
-    showSuccessMessage(successMessage);
-    console.log('connexion reussie')
-
-   
-
-    // Effectuer la requête Fetch pour l'authentification
-    const loginData = {
-      email: email,
-      password: password
-    };
-
-    fetch('http://localhost:5678/api/users/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(loginData)
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.token) {
-  // Authentification réussie
-  const token = data.token;
-
-  // Stocker le token dans le stockage local
-  localStorage.setItem('token', token);
-
-  // Afficher le message de réussite
-  const successMessage = "Connexion réussie ! Bienvenue, " + email + " !";
-  showSuccessMessage(successMessage);
-
-  // Rediriger vers la page d'accueil
-  window.location.href = './index.html';
-} else {
-  // Authentification échouée
-  const errorMessage = "Erreur dans l'identifiant ou le mot de passe";
-  showErrorMessage(errorMessage);
-}
-      })
-      .catch(error => {
-        // Gérer les erreurs de la requête
-        console.error('Erreur lors de la requête de connexion:', error);
-      });
-  }     else{
-    const errorMessage = "Erreur dans l'identifiant ou le mot de passe";
-  showErrorMessage(errorMessage);
-    }
-    */
+  
 }
 
 
