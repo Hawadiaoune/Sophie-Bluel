@@ -71,8 +71,7 @@ recupererTravauxArchitecte();
 
 
 
-//* Modale connexion/deconnexion
-
+//* page connexion/deconnexion
 
 // Sélectionner l'élément du lien de connexion/logout
 const loginLink = document.getElementById('loginLink');
@@ -81,13 +80,10 @@ const loginLink = document.getElementById('loginLink');
 const token = localStorage.getItem('token');
 if (token) {
   // Si un token est présent, cela signifie que l'utilisateur est connecté
-
+  loginLink.addEventListener('click', handleLoginLogout);
   loginLink.textContent = 'Logout';
 }
 
-
-// Ajouter un écouteur d'événement au lien de connexion/logout
-loginLink.addEventListener('click', handleLoginLogout);
 
 
 function handleLoginLogout() {
@@ -107,7 +103,8 @@ function handleLoginLogout() {
   }
 }
 
-
+// Écouter l'événement de clic sur le bouton de connexion/logout
+loginLink.addEventListener('click', handleLoginLogout);
 
 // Fonction pour mettre à jour l'affichage du bouton de connexion/logout dans la barre de navigation
 function updateLoginButton() {
@@ -131,8 +128,7 @@ window.addEventListener('load', updateLoginButton);
 
 
 
-// Écouter l'événement de clic sur le bouton de connexion/logout
-loginLink.addEventListener('click', handleLoginLogout);
+
 
 // Sélectionnez le bandeau
 const topBar = document.getElementById('topBar');
@@ -166,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const closeBtn = document.querySelector('.close');
   const boutonsCategories = document.querySelectorAll('#portfolio button');
   const travaux = document.querySelectorAll('.travail');
-/*backToGalleryButton*/
+
 
 // Créer l'overlay
 const overlay = document.createElement('div');
@@ -213,9 +209,6 @@ document.addEventListener('click', function (event) {
     // Vérifier si un token d'authentification est présent dans le stockage local
   const token = localStorage.getItem('token');
   if (token) {
-    // Ajouter un écouteur d'événements pour le clic en dehors de la modale pour la fermer
-
-
     // Si un token est présent, cela signifie que l'utilisateur est connecté
     // Afficher la modale
     modal.style.display = 'block';
@@ -543,7 +536,10 @@ fetch('http://localhost:5678/api/works', {
   });
 
 
-
+  const travaux = document.querySelectorAll('.travail');/*
+  travaux.forEach(travail => {
+    travail.style.display = 'block';
+  });*/
 
 // Fonction pour nettoyer la galerie existante et ajouter les nouveaux travaux
 function updateGallery(travaux) {
@@ -551,7 +547,11 @@ function updateGallery(travaux) {
   
   // Supprimer tous les éléments enfants de la galerie
   gallery.innerHTML = '';
-  
+
+
+  if (travaux && travaux.length > 0) {
+    travaux.forEach(travail => {
+
   // Ajouter les travaux à la galerie
   travaux.forEach(travail => {
     const travailElement = document.createElement('div');
@@ -580,6 +580,9 @@ function updateGallery(travaux) {
     // Ajouter la div du travail à la modale
     gallery.appendChild(travailElement);
   });
+});
+}
+
 }
 
 // Appel de la fonction pour récupérer les travaux via fetch + création de la variable contenant les nouveaux projets
@@ -597,7 +600,6 @@ async function recupererTravauxArchitecte() {
   }
 } 
 
-updateGallery();
 
 
 
